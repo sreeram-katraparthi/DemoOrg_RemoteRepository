@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Convert to Upper Case" icon-name="standard:formula">
+       
+        <lightning-layout multiple-rows="true">
+            <lightning-layout-item size="6" padding="around-small">
+              <lightning-input type="string" label="First Name" name="firstName" onchange={handleChange}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="6" padding="around-small">
+              <lightning-input type="string" label="Last Name" name="lastName" onchange={handleChange}></lightning-input>
+            </lightning-layout-item>
+            <lightning-layout-item size="12" padding="around-small">
+                <p class="slds-m-top_medium" style="color:blue; font-weight:bold;">{uppercasedFullName}</p>
+            </lightning-layout-item>
+          </lightning-layout>
+
+    </lightning-card>
+</template>

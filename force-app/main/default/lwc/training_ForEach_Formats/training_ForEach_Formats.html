@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="For Each Component" icon-name="custom:custom23">
+        <div class="slds-m-around_medium">
+            <template for:each={contacts} for:item=contact>
+                <div key={contact.id}>
+                    <p><lightning-formatted-text value={contact.name}></lightning-formatted-text></p>
+                    <p><lightning-formatted-email value={contact.email}></lightning-formatted-email></p>
+                    <p><lightning-formatted-phone value={contact.phone}></lightning-formatted-phone></p>
+                    <br>
+                </div>
+            </template>
+        </div>
+    </lightning-card>
+</template>

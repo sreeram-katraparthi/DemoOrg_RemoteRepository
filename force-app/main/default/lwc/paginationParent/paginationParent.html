@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Pagination Component Child to Parent" icon-name="custom:custom55">
+        <div class="slds-m-around_medium">
+            <p class="slds-text-align_center slds-text-align_center">
+                From Page {page}<br>
+                You have redirected to <br>
+                {msg}.
+            </p>
+        </div>
+        <c-pagination-buttons class="slds-show slds-is-relative" onprevious={handprev} onnext={handnext}></c-pagination-buttons>
+    </lightning-card>
+</template>

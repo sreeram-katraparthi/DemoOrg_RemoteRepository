@@ -1,0 +1,13 @@
+.THIS {
+}
+.THIS .slds-card{
+   background: whitesmoke;
+}
+.THIS .slds-grid{
+    background: rgb(0, 95, 178);
+    color: #fff;
+    width: 100%;
+    height: 40px;
+    text-align: center;
+    display: block;
+}

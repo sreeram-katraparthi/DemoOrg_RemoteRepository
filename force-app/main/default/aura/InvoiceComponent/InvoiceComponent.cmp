@@ -1,0 +1,7 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction" access="global" >
+    <!--<c:NewInvoiceItem/>-->
+    <c:InvoiceItemHeader sObjectName="Invoice_Item__c" 
+                         fieldSetName="Invoice_Item_Field_Set" 
+                         parentFieldName="" 
+                         parentRecordId=""/>
+</aura:component>

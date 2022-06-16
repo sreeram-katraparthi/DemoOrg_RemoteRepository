@@ -1,0 +1,5 @@
+<aura:component implements="force:lightningQuickAction,force:hasRecordId" access="global">
+    <aura:attribute name="clsoeQAWindow" type="boolean" default="false"/>    
+    <!--<c:disqualifyLead recordId="{!v.recordId}" onvaluechange="{!c.getValueFromLwc}"></c:disqualifyLead>-->
+    <c:updateRecOnLoad recrodId="{!v.recordId}" onvaluechange="{!c.getValueFromLwc}"></c:updateRecOnLoad>
+</aura:component>

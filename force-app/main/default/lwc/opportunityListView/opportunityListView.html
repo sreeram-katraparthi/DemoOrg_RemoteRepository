@@ -1,0 +1,13 @@
+<template>
+    <template if:true={showInlineSpinner}>
+        <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+    </template>
+    <c-opportunity-list-view-data-table data={result} columns={columns} key-field="Id" hide-checkbox-column  
+    default-sort-direction={defaultSortDirection} sorted-direction={sortDirection} 
+    sorted-by={sortedBy} onsort={onHandleSort}>
+    </c-opportunity-list-view-data-table>
+    <template if:true={showviewmore}>
+        <!-- <lightning-button variant="base" label="View All" title="View All" onclick={handleClick} class="slds-m-left_x-small slds-align_absolute-center"></lightning-button> -->
+        <a onclick={handleClick} target="_blank" data-id="viewAll" class="slds-align_absolute-center">View All ({count})</a>
+    </template>
+</template>

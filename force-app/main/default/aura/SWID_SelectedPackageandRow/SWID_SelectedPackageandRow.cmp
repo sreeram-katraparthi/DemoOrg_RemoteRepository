@@ -1,0 +1,318 @@
+<aura:component access="public" controller="SWID_CountryPicklistController">
+    <aura:attribute access="public" name="view" type="SWID_CountryPackagesWrapper.SWID_CountryPackagesWrapper"/>    
+    <aura:attribute access="public" name="selected" type="boolean" default="false"/>
+    <aura:attribute access="public" name="autoRel" type="boolean" default="false"/>
+    <aura:attribute access="public" name="rdyTabState" type="boolean" default="false"/>
+    <aura:attribute access="public" name="inDTabState" type="boolean" default="false"/>
+    <aura:attribute access="public" name="delTabState" type="boolean" default="false"/>
+    <aura:attribute access="public" name="ignTabState" type="boolean" default="false"/>
+    <aura:attribute access="public" name="showDetailWindow" type="boolean" default="false"/>
+    <aura:attribute access="public" name="showIgnrBtn" type="boolean" default="true"/>
+    <aura:attribute name="modalBox" type="Boolean" default="false" />
+    <aura:attribute name="btnActionName" type="String" default="" />
+    <aura:attribute name="actionVal" type="String" default="" />
+    <aura:attribute access="public" name="ignoreActionOnly" type="boolean" default="false"/>
+    <aura:attribute access="public" name="buttonClass" type="boolean" default="slds-button slds-button--neutral"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.dispCols}"/> 
+    <aura:registerEvent name="OnRecSelection" type="c:SWID_EnableButtonsEvent" />
+    <aura:registerEvent name="OnStatusChange" type="c:SWID_RerenderPackages"/> 
+    
+    <aura:if isTrue="{!v.showDetailWindow}">
+        <div class="demo-only" style="height: 640px;">
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_large slds-list-builder" aria-labelledby="id-of-modalheader-h2" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">                        
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeWindow}">
+                            <b>X</b>
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h1 id="id-of-modalheader-h1" class="slds-text-heading_medium" style="text-align: left;"><b>{!v.view.Packages}</b></h1>                        
+                    </header>
+                    <div class="slds-modal__content slds-grid slds-grow" id="modal-content-id-1">
+                        <div class="slds-grid slds-grid_vertical">                          
+                            <div class="slds-scrollable slds-grow">
+                                
+                                <table role="grid" class="slds-table slds-table_fixed-layout slds-table_bordered slds-table_resizable-cols slds-no-row-hover slds-scrollable_none">
+                                    <thead>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                                <fieldset class="slds-box slds-theme--default ">
+                                    <div class="slds-m-around--medium">                    
+                                        <div class="slds-tabs--default">                        
+                                            <ul class="slds-tabs--default__nav" role="tablist">
+                                                <li  aura:id="DetailsId" 			class="slds-tabs--default__item slds-text-title--caps slds-active" 	title="Detail Values" 		role="presentation"><a class="slds-tabs--default__link" href="javascript:void(0);" onclick="{!c.detailsTab}" 	role="tab" tabindex="0"  aria-selected="false" aria-controls="tab-default-1" id="details_Link_Id">DETAILS</a></li>
+                                                <li  aura:id="TestDistributionsIs"  class="slds-tabs--default__item slds-text-title--caps " 			title="Test Dist Values" 	role="presentation"><a class="slds-tabs--default__link" href="javascript:void(0);" onclick="{!c.testDistTab}" 	role="tab" tabindex="-1" aria-selected="true"  aria-controls="tab-default-2" id="testdist_Link_Id">TEST DISTRIBUTIONS</a></li>
+                                                <li  aura:id="LogsId" 				class="slds-tabs--default__item slds-text-title--caps" 				title="Log Values" 			role="presentation"><a class="slds-tabs--default__link" href="javascript:void(0);" onclick="{!c.logsTab}" 		role="tab" tabindex="-3" aria-selected="false" aria-controls="tab-default-4" id="logs_Link_Id">LOGS</a></li>								
+                                            </ul>
+                                            <div aura:id="DetailsId" id="tab-default-1" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="details_Link_Id">
+                                                <ul>
+                                                    <li class="slds-form-element slds-hint-parent slds-border_bottom">
+                                                        <div class="slds-grid slds-p-top_medium">
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                
+                                                                <ui:outputText value="Package ID"/>
+                                                            </div>
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                
+                                                                <ui:outputText value="{!v.view.Packages}"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-p-top_medium">
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                                                                <ui:outputText value="Published On"/>
+                                                            </div>
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                                                                <!--<c:SWID_DATETIME dateTimeVal="{!v.view.publishedOn}"/>-->
+                                                                <c:SWID_DATETIME detailDateTime="true" dateTimeVal="{!v.view.publishedOn}" />
+                                                            </div>
+                                                        </div>                                     
+                                                        <div class="slds-grid slds-p-top_medium">
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                <ui:outputText value="Arrived On"/>
+                                                            </div>
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                               
+                                                                <c:SWID_DATETIME detailDateTime="true" dateTimeVal="{!v.view.ArrivedDate}" />
+                                                            </div>
+                                                        </div>
+                                                        <br/>
+                                                    </li>
+                                                    
+                                                    <li class="slds-form-element slds-hint-parent slds-border_bottom">
+                                                        <div class="slds-grid slds-p-top_medium">
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                        
+                                                                <ui:outputText value="UI Language"/>
+                                                            </div>
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                        
+                                                                <ui:outputText value="{!v.view.UILang}"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-p-top_medium">
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                        
+                                                                <ui:outputText value="System Class"/>
+                                                            </div>
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                        
+                                                                <ui:outputText value="{!v.view.sysCls}"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-p-top_medium">
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                        
+                                                                <ui:outputText value="Routing Country"/>
+                                                            </div>
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                        
+                                                                <ui:outputText value="{!v.view.country}"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-p-top_medium">
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                        
+                                                                <ui:outputText value="Target Environment"/>
+                                                            </div>
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                        
+                                                                <ui:outputText value="{!v.view.Packages}"/>
+                                                            </div>
+                                                        </div><br/>
+                                                    </li>
+                                                    <li class="slds-form-element slds-hint-parent slds-border_bottom">
+                                                        <div class="slds-grid slds-p-top_medium">
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                <ui:outputText value="Configuration"/>
+                                                            </div>
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                <ui:outputText value="{!v.view.Packages}"/>
+                                                            </div>
+                                                        </div>
+                                                        <div class="slds-grid slds-p-top_medium">
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                <ui:outputText value="Other in the future"/>
+                                                            </div>
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                <ui:outputText value=" "/>
+                                                            </div>
+                                                        </div><br/>
+                                                    </li>
+                                                    <li class="slds-form-element slds-hint-parent slds-border_bottom">
+                                                        <div class="slds-grid slds-p-top_medium">
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                <ui:outputText value="Package Description"/>
+                                                            </div>
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                <ui:outputText value="{!v.view.DescriptionUntrim}"/>
+                                                            </div>
+                                                        </div><br/>
+                                                    </li>
+                                                    <li class="slds-form-element slds-hint-parent slds-border_bottom">
+                                                        <div class="slds-grid slds-p-top_medium">
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                <ui:outputText value="Status"/>
+                                                            </div>
+                                                            <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                <c:SWID_PackStatusColours detailStatus="true" status="{!v.view}"/>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                        <aura:If isTrue="{!v.inDTabState}">
+                                                            <div class="slds-grid slds-p-top_medium">
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <ui:outputText value="Released By"/>
+                                                                </div>
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <ui:outputText value="{!v.view.releasedBy}"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-grid slds-p-top_medium">
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <ui:outputText value="Released Date"/>
+                                                                </div>
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <c:SWID_DATETIME detailDateTime="true" dateTimeVal="{!v.view.ReleasedOn}" />
+                                                                </div>
+                                                            </div>
+                                                        </aura:If>
+                                                        <aura:If isTrue="{!v.delTabState}">
+                                                            <div class="slds-grid slds-p-top_medium">
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <ui:outputText value="Deleted By"/>
+                                                                </div>
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <ui:outputText value="{!v.view.deletedBy}"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-grid slds-p-top_medium">
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <ui:outputText value="Deleted Date"/>
+                                                                </div>
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <c:SWID_DATETIME detailDateTime="true" dateTimeVal="{!v.view.DeletedOn}" />
+                                                                </div>
+                                                            </div>
+                                                        </aura:If>
+                                                        <aura:If isTrue="{!v.ignTabState}">
+                                                            <div class="slds-grid slds-p-top_medium">
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <ui:outputText value="Ignored By"/>
+                                                                </div>
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <ui:outputText value="{!v.view.ignoredBy}"/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-grid slds-p-top_medium">
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <ui:outputText value="Ignored Date"/>
+                                                                </div>
+                                                                <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >                                                    
+                                                                    <c:SWID_DATETIME detailDateTime="true" dateTimeVal="{!v.view.IgnoredOn}" />
+                                                                </div>
+                                                            </div>
+                                                        </aura:If>
+                                                        <br/>
+                                                    </li>
+                                                </ul>                                               
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeWindow}" >Cancel</button>
+                        <aura:If isTrue="{!v.rdyTabState}">
+                            <lightning:button variant="brand" label="Local Release" onclick="{!c.detail_LocRelAction_Ready}" disabled="false"/><!--{! c.localReleaseButton_Ready }-->
+                            <lightning:button variant="brand" label="Test Release" onclick="{!c.detail_TestRelAction}" disabled="false"/>
+                            <lightning:button variant="brand" label="Ignore" onclick="{!c.detail_IgnoreAction}" disabled="{!v.showIgnrBtn}"/>
+                        </aura:If>
+                        <aura:If isTrue="{!v.inDTabState}">
+                            <lightning:button class="slds-button slds-button--destructive" label="Delete Local Release" onclick="{!c.detail_DeleteLocalRelAction}" disabled="false"/>
+                        </aura:If>
+                        
+                        <aura:If isTrue="{!v.delTabState}">
+                            <lightning:button variant="brand" label="Local Release" onclick="{!c.detail_LocalRelAction_Delete}" disabled="false"/>
+                        </aura:If>
+                        <aura:If isTrue="{!v.ignTabState}">
+                            <lightning:button variant="brand" label="Unignore" onclick="{!c.detail_UnIgnoreAction}" disabled="false"/>
+                        </aura:If>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </div>
+    </aura:if>    
+    
+    <tr class="{!v.selected ? 'row-bg' : ''}">
+        <td data-label="">
+            <div class="slds-truncate" >
+                <div class="slds-form-element">
+                    <div class="slds-form-element__control"><b>
+                        <label class="slds-checkbox">
+                            <ui:inputCheckbox text="{!v.view.packageId}" aura:id="boxPack" value="{!v.view.isSelected}" change="{!c.checkboxSelect}"/>
+                            <span class="slds-checkbox--faux"></span>
+                            <span class="slds-form-element__label text"></span>
+                        </label></b>
+                    </div>
+                </div>
+            </div>
+        </td>
+        <!--<td><ui:outputText value="{!v.view.Packages}"/></td>-->
+        <td>
+            <span> 
+                <a href = "" aura:id="{!v.view.packageId}" onclick = "{!c.navigateToPackDetails}">{!v.view.Packages}</a>
+            </span> 
+        </td>
+        <td><ui:outputText title="{!v.view.DescriptionUntrim}" value="{!v.view.Description}"/></td>											
+        <td><ui:outputText value="{!v.view.sysCls}"/></td>
+        <td><ui:outputText value="{!v.view.UILang}"/></td>
+        <aura:If isTrue="{!!v.ignTabState}">
+            
+          <td><ui:outputText value="{!v.view.testDistribution}"/></td>                  
+        </aura:If>
+        <td><c:SWID_PackStatusColours status="{!v.view}"/></td>
+        <aura:If isTrue="{!v.rdyTabState}">               
+            <td><c:SWID_DATETIME dateTimeVal="{!v.view.publishedOn}" /></td>
+            <td><c:SWID_DATETIME dateTimeVal="{!v.view.ArrivedDate}" /></td>               
+        </aura:If>
+        <aura:If isTrue="{!v.inDTabState}">
+            <td><c:SWID_DATETIME dateTimeVal="{!v.view.ReleasedOn}" /></td>
+        </aura:If>
+        <aura:If isTrue="{!v.delTabState}">
+            <td><c:SWID_DATETIME dateTimeVal="{!v.view.DeletedOn}" /></td>
+        </aura:If>
+        <aura:If isTrue="{!v.ignTabState}">
+            <!--<td><ui:outputText value="{!v.view.IgnoredOn}"/></td>-->
+            <td><c:SWID_DATETIME dateTimeVal="{!v.view.IgnoredOn}" /></td>
+        </aura:If>
+    </tr>
+    <aura:if isTrue="{!v.modalBox}">
+            <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+                <div class="slds-modal__container">
+                    <!-- ###### MODAL BOX HEADER Part Start From Here ######-->
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModal}">
+                            X
+                            <span class="slds-assistive-text">Close</span>
+                        </button>
+                        <h2 id="header99" class="slds-text-heading--medium"><b>{!v.btnActionName}</b></h2>
+                    </div>
+                    <!--###### MODAL BOX BODY Part Start From Here ######-->
+                    <div class="slds-modal__content slds-p-around--medium">
+                        <p><b> {!v.view.Packages} is about to be {!v.actionVal} for {!v.view.country} region.
+                            </b>
+                        </p>
+                    </div>
+                    <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                    <div class="slds-modal__footer">
+                        <button class="slds-button slds-button--neutral" onclick="{!c.closeModal}" >Cancel</button>
+                        
+                        <aura:If isTrue="{!v.inDTabState}">
+                        <button class="slds-button slds-button--destructive" onclick="{!c.ReadyTabLocalRelease}">{!v.btnActionName}</button>
+                        <aura:set attribute="else">
+                        <button class="slds-button slds-button--brand" onclick="{!c.ReadyTabLocalRelease}">{!v.btnActionName}</button>
+                        </aura:set>
+                    </aura:If>
+                    </div>
+                </div>
+            </div>
+            <div class="slds-backdrop slds-backdrop--open"></div>  
+        </aura:if>
+</aura:component>

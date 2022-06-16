@@ -1,0 +1,55 @@
+<aura:component controller="PickListController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" 
+				access="global" >
+    <ltng:require styles="/resource/bootstrap/css/bootstrap.min.css" 
+				  scripts="/resource/bootstrap/js/jquery-2.js,/resource/bootstrap/js/bootstrap.min.js" />
+    <aura:attribute name="lstPackages" 
+					type="SWID_CountryPackagesWrapper[]"/>
+    <aura:attribute name="arrowDirection" type="string" default="arrowup" description="Use for change arrow sign direction on header based on click"/>
+    <aura:attribute name="isAsc" type="boolean" default="true" description="boolean flag for pass sorting condition to apex class"/> 
+    <aura:attribute name="selectedTabsoft" type="string" default="firstName" description="Use for show/hide arraow sign on header based on conditions"/>
+    
+    <!--- on initialization of component init event will fire and doInit action will execute-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    
+    
+    <div class="container">
+        <h2>Packages</h2>
+        <table class="table table-striped" id="myTable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Package Name</th>
+                    <th>Status</th>
+                    <th>State</th>
+                    <th class="slds-is-sortable slds-text-title--caps" scope="col" onclick="{!c.sortFirstName}">
+                    	<a href="javascript:void(0);" class="slds-th__action slds-text-link--reset">
+            				<span class="slds-assistive-text">Sort</span>
+                            <span class="slds-truncate" title="Name">Country</span>
+                            <aura:if isTrue="{! and(v.arrowDirection == 'arrowdown', v.selectedTabsoft == 'firstName') }">&nbsp;  &#9660; </aura:if>  
+            				<aura:if isTrue="{! and(v.arrowDirection != 'arrowdown', v.selectedTabsoft == 'firstName') }"> &nbsp;  &#9650; </aura:if>                        
+                        </a>
+                    </th>
+                    <th>Arrived On</th>
+                    <th>Created On</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- TO Check if list is not empty-->
+                <aura:if isTrue="{!!empty(v.lstPackages)}">
+                    <aura:iteration var="position" items="{!v.lstPackages}" >
+                        <tr>
+                            <td><ui:inputCheckbox value="{!position.isSelected}"/></td>
+                            <td><ui:outputText value="{!position.packageName}"/></td>
+                            <td><ui:outputText value="{!position.status}"/></td>
+                            <td><ui:outputText value="{!position.status}"/></td>
+                            <td><ui:outputText value="{!position.country}"/></td>
+                        </tr>
+                    </aura:iteration>
+                </aura:if>
+            </tbody>
+        </table>
+        
+        <ui:button class="btn btn-default" press="{!c.doSomething}">Perform Action</ui:button>
+        
+    </div>
+</aura:component>

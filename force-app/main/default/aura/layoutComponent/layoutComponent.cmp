@@ -1,0 +1,18 @@
+<aura:component >
+    <div class="c-container" verticalAlign="space">
+        <lightning:layout ><!--verticalAlign="space"-->
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+                1
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+                2
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+                3
+            </lightning:layoutItem>
+            <lightning:layoutItem flexibility="auto" padding="around-small">
+                4
+            </lightning:layoutItem>
+        </lightning:layout>
+    </div>
+</aura:component>

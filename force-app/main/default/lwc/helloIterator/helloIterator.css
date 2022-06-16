@@ -1,0 +1,9 @@
+.list-first {
+    border-top: 5px solid blue;
+    padding-top: 10px;
+}
+
+.list-last {
+    border-bottom: 5px solid greenyellow;
+    padding-bottom: 20px;
+}

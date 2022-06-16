@@ -1,0 +1,15 @@
+<apex:page sidebar="false" showHeader="True" standardStylesheets="false">
+    <apex:includeScript value="/lightning/lightning.out.js" />
+    <div id="lightning" />
+
+    <script>
+        $Lightning.use("c:SWID_PackagesApplication", function() {
+          $Lightning.createComponent("c:SWID_Packages",
+          { label : "" },
+          "lightning",
+          function(cmp) {
+            // do some stuff
+          });
+        });
+    </script>
+</apex:page>

@@ -1,0 +1,26 @@
+<template>
+    <div class="slds-grid slds-grid_align-spread">
+        <span class="ci-summary slds-grid slds-grid_vertical">
+            <span class="ci-summary__label slds-text-color_weak lds-m-bottom_xx-small">Active</span>
+            <span>
+                <c-ci-tally-comp details={activeresult}></c-ci-tally-comp>
+            </span>
+        </span>
+        <span class="ci-summary slds-grid slds-grid_vertical">
+            <span class="ci-summary__label slds-text-color_weak slds-m-bottom_xx-small">Won</span>
+            <span>
+                <c-ci-tally-comp details={wonresult}></c-ci-tally-comp>
+            </span>
+        </span>
+        <span class="ci-summary slds-grid slds-grid_vertical">
+            <span class="ci-summary__label slds-text-color_weak lds-m-bottom_xx-small">Lost</span>
+            <span>
+                <c-ci-tally-comp details={lostresult}></c-ci-tally-comp>
+            </span>
+        </span>
+        <span class="ci-summary slds-grid slds-grid_vertical">
+        </span>
+        <span class="ci-summary slds-grid slds-grid_vertical">
+        </span>
+    </div>
+</template>

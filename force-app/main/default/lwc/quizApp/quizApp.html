@@ -1,0 +1,35 @@
+<template>
+    <lightning-card title="Quiz for the day">        
+            <div class="slds-p-around_medium">
+                <template if:true={isSubmitted}>
+                    <div class={isFullScore}>You have scored {score}  out of {quizItems.length}</div>
+                </template>
+<form>
+    <template for:each={quizItems} for:item="item">
+                    <div class="slds-m-around_medium" key={item.id}>
+                        <span>{item.id} - {item.question}</span>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col">
+                                <input type="radio" name={item.id} value="a" onchange={checkOption}/>
+                                    {item.options.a}
+                            </div>
+                            <div class="slds-col">
+                                <input type="radio" name={item.id} value="b" onchange={checkOption}/>
+                                    {item.options.b}
+                            </div>
+                            <div class="slds-col">
+                                <input type="radio" name={item.id} value="c" onchange={checkOption}/>
+                                    {item.options.c}
+                            </div>
+                          </div>
+                    </div>
+                </template>
+    <lightning-button variant="brand" type="submit" label="Submit" title="Submit Quiz" class="slds-m-around_small" onclick={submitQuiz} disabled={allSelected}>
+    </lightning-button>
+    <lightning-button variant="brand" type="reset" label="Reset" title="Rest Quiz" class="slds-m-around_small" onclick={resetQuiz}>
+    </lightning-button>
+</form>
+</div>
+
+</lightning-card>
+</template>

@@ -1,0 +1,10 @@
+<template>
+    <h1>Hellow LWC World! {name}</h1>
+    <lightning-input type="tel"
+                     label="Telephone"
+                     value={phone}
+                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                     onchange={updateoutput}>
+    </lightning-input>
+    <div><h1>{phone}</h1></div>
+</template>

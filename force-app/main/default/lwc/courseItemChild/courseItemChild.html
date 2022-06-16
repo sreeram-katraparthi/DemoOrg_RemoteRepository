@@ -1,0 +1,16 @@
+<template>
+    <template if:true={course}>
+        <lightning-layout vertical-align="center">
+            <!--<lightning-layout-item>
+                <img src={contact.Picture__c} alt="Profile photo" />
+            </lightning-layout-item>-->
+            <lightning-layout-item padding="around-small">
+                <p><b>Course Name :</b><lightning-formatted-text value={course.Name}></lightning-formatted-text></p>
+                <p><b>Course Duration :</b><lightning-formatted-text value={course.Duration}></lightning-formatted-text></p>
+                <p><b>Contact Phone :</b><lightning-formatted-phone value={course.Phone}></lightning-formatted-phone></p>
+                <p><b>Cntact Email :</b><lightning-formatted-email  value={course.Email}></lightning-formatted-email></p> 
+            </lightning-layout-item>
+        </lightning-layout>
+    </template>
+    <template if:false={course}><p>No course data available.</p></template>
+</template>

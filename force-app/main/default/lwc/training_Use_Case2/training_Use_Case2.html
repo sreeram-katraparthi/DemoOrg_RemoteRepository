@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Second Component" icon-name="custom:custom14">        
+        <div class="slds-var-m-around_medium">
+            <lightning-button variant="brand" label="Submit" title="Submit" onclick={handleSubmit} slot="actions"></lightning-button> 
+            <lightning-input label="Name" value={name} onchange={handleNameChange}></lightning-input>
+            <lightning-input label="Email" value={email} onchange={handleEmailChange}></lightning-input>
+            <lightning-input label="Value" value={phone} onchange={handlePhoneChange}></lightning-input>
+        </div>        
+        <div class="slds-var-m-vertical_medium">
+            <template if:true={showDetails}>    
+                <p class="slds-m-top_medium">Name  : {name}</p>
+                <p class="slds-m-top_medium">Email : {email}</p>
+                <p class="slds-m-top_medium">Phone : {phone}</p>
+            </template>
+        </div>    
+    </lightning-card>
+</template>

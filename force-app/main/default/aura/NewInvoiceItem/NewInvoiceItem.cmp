@@ -1,0 +1,19 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction"
+                access="global" >
+    
+    <aura:registerEvent name="lightningEvent" type="c:CloseNewInvoiceItem" />
+    <lightning:recordEditForm objectApiName="Invoice_Item__c"
+                              onsuccess="{!c.handleOnSuccess}"
+                              class="slds-card__body_inner">        
+        <lightning:messages />        
+        
+        <lightning:inputField fieldName="Name"/>
+        <lightning:inputField fieldName="Contact__c"/>
+        <lightning:inputField fieldName="Quantity__c"/>
+        <lightning:inputField fieldName="Price__c"/>
+        <lightning:inputField fieldName="Shipped__c"/>
+        <lightning:inputField fieldName="Status__c"/> 
+        
+        <lightning:button class="slds-m-top_small" type="submit" label="Create Item" />
+    </lightning:recordEditForm>
+</aura:component>

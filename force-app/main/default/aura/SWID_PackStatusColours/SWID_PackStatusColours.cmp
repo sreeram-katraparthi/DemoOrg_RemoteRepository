@@ -1,0 +1,56 @@
+<aura:component controller="SWID_CountryPicklistController">
+    <!--call onLoad js function on every time component load-->
+    <aura:handler name="init" value="{!this}" action="{!c.onLoad}"/>
+    
+    <aura:attribute name="Color" type="String"/>
+    <!--<aura:attribute name="status" type="String"/>--> 
+    <aura:attribute name="status" type="SWID_CountryPackagesWrapper.SWID_CountryPackagesWrapper"/>  
+    <aura:attribute access="PUBLIC" name="autoRel" type="boolean" default="false"/>
+    <aura:attribute name="toolTipMsg" type="boolean" default="false"/> 
+    <aura:attribute name="detailStatus" type="boolean" default="false"/>
+    <aura:registerEvent name="OnRecSelection" type="c:SWID_EnableButtonsEvent"/>
+    
+    <div class="slds-truncate"  title="{!v.status.releaseStatus}"><!--.releaseStatus-->
+        <!--<span class="slds-badge" style="{!'background-color: ' +v.Color}"> {!v.status}</span>-->
+        <aura:if isTrue="{!v.detailStatus}">
+            <aura:if isTrue="{!v.autoRel}">
+                <div class="slds-form-element">
+                    <div class="slds-form-element__icon slds-align-middle" >                    
+                        <span class="slds-badge" style="{!'background-color: ' + v.Color}"> {!v.status.releaseStatus}
+                            <lightning:icon class="custom-background" iconName="utility:rotate" variant="rotate" size="xx-small"/>
+                        </span> 
+                    </div>
+                </div>
+                <aura:set attribute="else">
+                    <span class="slds-badge" style="{!'background-color: ' + v.Color}"> {!v.status.releaseStatus} </span>
+                </aura:set>
+            </aura:if>
+            
+            <aura:set attribute="else">
+                <aura:if isTrue="{!v.autoRel}">          	
+                    <div onmouseout="{!c.displayOut}" onmouseover="{!c.display}">
+                        <div class="slds-form-element">
+                            <div class="slds-form-element__icon slds-align-middle" >                    
+                                <span class="slds-badge" style="{!'background-color: ' + v.Color}"> {!v.status.releaseStatus}
+                                    <lightning:icon class="custom-background" iconName="utility:rotate" variant="rotate" size="xx-small"/>
+                                </span> 
+                            </div>
+                        </div>
+                        <aura:if isTrue="{!v.toolTipMsg}">
+                            <div aura:id="tooltip" class="slds-popover slds-popover--tooltip slds-nubbin--left-top toggle" role="tooltip" id="help" style="position:absolute;top:-4px;right:-200px;" >
+                                <div class="slds-popover__body">This package has been Auto Released.</div>
+                            </div> 
+                        </aura:if>   
+                        
+                    </div>
+                    <aura:set attribute="else">
+                        <span class="slds-badge" style="{!'background-color: ' + v.Color}"> {!v.status.releaseStatus} </span>
+                    </aura:set>
+                    
+                </aura:if>
+            </aura:set>
+        </aura:if>  
+        
+        
+    </div>
+</aura:component>

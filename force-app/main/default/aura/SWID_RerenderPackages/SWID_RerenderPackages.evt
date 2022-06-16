@@ -1,0 +1,6 @@
+<aura:event type="COMPONENT" description="Fire this event for fetching the updated packages after the status has been updated from a model window" >
+    <aura:attribute access="global" name="Packages" type="SWID_CountryPackagesWrapper.SWID_CountryPackagesWrapper[]" 
+                    description="Carry the selected record(s) from a child component"/>
+    <aura:attribute access="global" name="refreshPacks" type="boolean" default="false"
+                    description="To reload the pacakges after the status has been updated"/>
+</aura:event>

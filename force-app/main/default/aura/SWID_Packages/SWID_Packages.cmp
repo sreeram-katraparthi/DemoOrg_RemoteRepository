@@ -1,0 +1,973 @@
+<aura:component implements="force:lightningquickaction,force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" controller="SWID_CountryPicklistController" >
+    <ltng:require styles="/resource/bootstrap/css/bootstrap.min.css" 
+                  scripts="/resource/bootstrap/js/jquery-2.js,/resource/bootstrap/js/bootstrap.min.js" />
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="OnStatusChange" event="c:SWID_RerenderPackages" action="{!c.refreshPacks}"/><!--refreshPacks-->
+    <!--To reset the lookup modal box boolean variable to default value-->
+    <aura:handler name="OnLookupModalClose" event="c:SWID_Disbale_Lookup_Modal_Event" action="{!c.setLookupModal}"/>
+    
+    <aura:attribute name="objInfo" type="object" default="{sobjectType : 'SWID_PackageRelease__c'}" />
+    <aura:attribute name="fourTabsView" type="Boolean" default="false" />
+    <aura:attribute name="allSelectCheckbox" type="Boolean" default="false"/>
+    <aura:attribute name="boolPACKID" type="Boolean" default="false"/>
+    <aura:attribute name="statusOptions" type="List" default="[]"/>
+    <aura:attribute name="packageSelection" type="SWID_CountryPackagesWrapper.SWID_CountryPackagesWrapper[]" default=""/>
+    <aura:attribute name="wrapperList" type="SWID_CountryPackagesWrapper.SWID_CountryPackagesWrapper"/>
+    <aura:attribute name="lstPackages"	type="SWID_CountryPackagesWrapper.SWID_CountryPackagesWrapper[]" />
+    <aura:attribute name="totalRecordsLength" type="String" default="" />
+    <aura:attribute name="selectedCountryVal" type="String" default="" />
+    <aura:attribute name="countToDisplay" type="String" default="" />
+    <aura:attribute name="sortedByVal" type="String" default="Arrived Date" />
+    <aura:attribute name="myBool" type="Boolean" default="false"/>
+    <aura:attribute name="myBoolReleased" type="Boolean" default="false"/>
+    <aura:attribute name="myBoolDeleted" type="Boolean" default="false"/>
+    <aura:attribute name="myBoolIgnored" type="Boolean" default="false"/>
+    <aura:attribute name="checkSelectAllState" type="Boolean" default="false"/> <!-- dummy -->
+    
+    <!-- Enabling buttons -->    
+    <aura:attribute type="Boolean"	name="enableLocRelBtn_Ready" default="true"/>
+    <aura:attribute type="Boolean"	name="enableTestRelBtn_Ready" default="true" />
+    <aura:attribute type="Boolean"	name="enableIgnBtn_Ready" default="true"/>
+    <aura:attribute type="Boolean"	name="enableDelLocRelBtn_InDistrub" default="true" />
+    <aura:attribute type="Boolean"	name="enableTestRelBtn_InDistrub" default="true" />
+    <aura:attribute type="Boolean"	name="enableLocRelBtn_Delete" default="true"/>
+    <aura:attribute type="Boolean"	name="enableTestRelBtn_Delete" default="true" />
+    <aura:attribute type="Boolean"	name="enableIgnBtn_Ignore" default="true"/>
+    <aura:attribute type="Boolean"	name="displayCountOfPcks" default="false"/>
+    
+    <!-- Count of Records -->
+    <aura:attribute name="readyTabCount" type="Boolean" default="true" />
+    <aura:attribute name="inDisTabCount" type="Boolean" default="true" />
+    <aura:attribute name="deleteTabCount" type="Boolean" default="true" />
+    <aura:attribute name="ignoreTabCount" type="Boolean" default="true" />
+    
+    <!-- Modal Box -->
+    <aura:attribute name="modalBox" type="Boolean" default="false" />
+    <aura:attribute name="btnActionName" type="String" default="" />
+    <aura:attribute name="actionVal" type="String" default="" />
+    <aura:attribute access="public" name="ignoreActionOnly" type="boolean" default="false"/>
+    <aura:attribute name="cntOfRcds" type="Integer" default="0" />
+     <aura:attribute name="SelectedButton" type="String" default="" />
+    <aura:attribute name="LookupmodalBox" type="boolean" default="false"/>
+    <!--- Pgn/sort --> 
+    <aura:attribute type="Integer"	name="pageNumber" default="1" />
+    <aura:attribute type="Integer"  name="maxPage"	default="1" />
+    <aura:attribute type="String"   name="sortField" />
+    <aura:attribute type="Boolean"	name="sortAsc" />
+    <aura:handler name="change"	value="{!v.pageNumber}"	action="{!c.renderPage}" />
+    
+    <aura:attribute type="Integer"	name="pageNumberReleased" default="1" />
+    <aura:attribute type="Integer"  name="maxPageReleased"	default="1" />
+    <aura:handler name="change"	value="{!v.pageNumberReleased}"	action="{!c.renderPageReleased}" />
+    
+    <aura:attribute type="Integer"	name="pageNumberDeleted" default="1" />
+    <aura:attribute type="Integer"  name="maxPageDeleted"	default="1" />
+    <aura:handler name="change"	value="{!v.pageNumberDeleted}"	action="{!c.renderPageDeleted}" />
+    
+    <aura:attribute type="Integer"	name="pageNumberIgnored" default="1" />
+    <aura:attribute type="Integer"  name="maxPageIgnored"	default="1" />
+    <aura:handler name="change"	value="{!v.pageNumberIgnored}"	action="{!c.renderPageIgnored}" />
+    
+    <aura:attribute name="arrowDirection" type="string" default="arrowup" description="Use for change arrow sign direction on header based on click"/>
+    <aura:attribute name="selectedTabsoft" type="string" default="firstName" description="Use for show/hide arraow sign on header based on conditions"/>
+    
+    <!-- List of Rcds based on RELEASE STATE values...4 sections -->
+    <aura:attribute type="object[]"	name="readyPackageRcds" />
+    <aura:attribute type="object[]"	name="releasePackgeRcds" />
+    <aura:attribute type="object[]" name="deletedPackageRcds" />
+    <aura:attribute type="object[]" name="ignoredPackageRcds" />
+    <aura:attribute type="object[]" name="currentReadyList" />
+    <aura:attribute type="object[]" name="currentReleasedList" />
+    <aura:attribute type="object[]" name="currentDeletedList" />
+    <aura:attribute type="object[]" name="currentIgnoredList" />
+    
+    <!-- Count of selected rows based on their status -->
+    <aura:attribute type="Integer"	name="ErrorStatusCount" 			default="0" />
+    <aura:attribute type="Integer"  name="TestStatusCount"				default="0" />
+    <aura:attribute type="Integer"  name="PendingStatusCount"			default="0" />
+    <aura:attribute type="Integer"	name="InDistributionStatusCount" 	default="0" />
+    <aura:attribute type="Integer"  name="IgnoredStatusCount"			default="0" />
+    <aura:attribute type="Integer"  name="DeletedStatusCount"			default="0" />    
+    <aura:attribute type="integer"  name="selectedCount"  				default="0"/>
+    
+    <aura:attribute type="string[]" 	name="TestRecIds"/>
+    <aura:attribute type="string[]" 	name="PendingRecIds"/>
+    <aura:attribute type="string[]" 	name="InDistRecIds"/>
+    <aura:attribute type="string[]" 	name="DelRecIds"/>
+    <aura:attribute type="string[]" 	name="IgnrdRecIds"/>
+    <aura:attribute type="string[]" 	name="allRecsIds"/>
+    
+    <aura:handler event="aura:waiting" action="{!c.showSpinner}"/>
+    <aura:handler event="aura:doneWaiting" action="{!c.hideSpinner}"/>
+    <aura:attribute name="Spinner" type="boolean" default="false"/>
+    
+    <div>
+        <div class="slds-page-header">
+            <div class="slds-media">
+                
+                <div class="Packdiv">
+                    <h1 class="slds-page-header__title slds-truncate slds-align-middle" title="Rohde Corp - 80,000 Widgets">PACKAGES</h1>                
+                    <lightning:combobox aura:id="routingCntryId"
+                                        placeholder="Select Country" onchange="{!c.onPicklistChange}"
+                                        value="new" options="{!v.statusOptions}" /> 
+                </div>
+                <aura:if isTrue="{!v.displayCountOfPcks}">   
+                    <div class="countRightCorner">
+                        <br/>
+                        {!v.countToDisplay} Packages in {!v.selectedCountryVal} | sorted by {!v.sortedByVal}  
+                        <!-- <br/> {!v.selectedCount} records are selected count  -->
+                    </div>
+                                        
+                </aura:if>
+                
+            </div><br/>
+            <!--<lightning:button variant="brand" label="Test Modal" onclick="{! c.onClkTestModal }"/>-->
+        </div>
+        
+        
+               
+        
+        <aura:if isTrue="{!v.fourTabsView}">
+            <fieldset class="slds-box slds-theme--default ">
+                
+                <div class="slds-m-around--medium">
+                    
+                    <div class="slds-tabs--default">
+                        
+                        <ul class="slds-tabs--default__nav" role="tablist">
+                            <li  aura:id="readyAuraId" class="slds-tabs--default__item slds-text-title--caps slds-active" title="Ready Values" role="presentation" ><a class="slds-tabs--default__link" href="javascript:void(0);" onclick="{!c.readyTab}" role="tab" tabindex="0" aria-selected="false" aria-controls="tab-default-1" id="ready_Link_Id">READY</a></li>
+                            <li  aura:id="releasedAuraId"  class="slds-tabs--default__item slds-text-title--caps " title="Release Values" role="presentation"><a class="slds-tabs--default__link" href="javascript:void(0);" onclick="{!c.releasedTab}" role="tab" tabindex="-1" aria-selected="true" aria-controls="tab-default-2" id="released_Link_Id">IN DISTRIBUTION</a></li>
+                            <li  aura:id="deletedAuraId" class="slds-tabs--default__item slds-text-title--caps" title="Delete Values" role="presentation"><a class="slds-tabs--default__link" href="javascript:void(0);" onclick="{!c.deleteTab}" role="tab" tabindex="-3" aria-selected="false" aria-controls="tab-default-4" id="deleted_Link_Id">DELETED</a></li>
+                            <li  aura:id="ignoredAuraId" class="slds-tabs--default__item slds-text-title--caps" title="Ignore Values" role="presentation"><a class="slds-tabs--default__link" href="javascript:void(0);" onclick="{!c.ignoredTab}" role="tab" tabindex="-2" aria-selected="false" aria-controls="tab-default-3" id="Ignored_Link_Id">IGNORED</a></li>
+                        </ul>   
+                        
+                        
+                        <div aura:id="readyDataId" id="tab-default-1" class="slds-tabs--default__content slds-show" role="tabpanel" aria-labelledby="ready_Link_Id">
+                            <div>
+                                <lightning:button variant="brand" label="Local Release" onclick="{! c.localReleaseButton_Ready }" disabled="{!v.enableLocRelBtn_Ready}"/>
+                                <lightning:button variant="brand" label="Test Release" onclick="{! c.TestReleaseButton_Ready }" disabled="{!v.enableTestRelBtn_Ready}"/>
+                                <lightning:button variant="brand" label="Ignore" onclick="{! c.IgnoreButton_Ready }" disabled="{!v.enableIgnBtn_Ready}"/>
+                            </div><br/>
+                            <aura:if isTrue="{!v.readyTabCount}">
+                                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                                    <thead>
+                                        <tr class="slds-text-title_caps">
+                                            
+                                            <!-- <th scope="col">
+                                            <ui:inputCheckbox aura:id="allCheck" class="slds-checkbox" value="{!v.allSelectCheckbox}"/>
+                                        </th> -->
+                                            <th style="width:3.25rem;" class="slds-text-align--right">
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control"><b>
+                                                        <label class="slds-checkbox">
+                                                            <!--header checkbox for select all-->
+                                                            <ui:inputCheckbox aura:id="box1" change="{!c.selectAll}" value="{!v.myBool}"/>
+                                                            <span class="slds-checkbox--faux"></span>
+                                                            <span class="slds-form-element__label text"></span>
+                                                        </label> </b>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            
+                                            <th scope="col">
+                                                <!-- for data attributes dont use capitalcase-->
+                                                <div onclick="{!c.sortByString}" data-sortfield="Packages"
+                                                     class="slds-truncate data-row"
+                                                     title="PACKAGE Name">
+                                                    <b>PACKAGE ID
+                                                        <aura:if isTrue="{!v.sortField=='Packages'}">
+                                                            <span>
+                                                                <aura:if isTrue="{!v.sortAsc}">
+                                                                    &#8593;
+                                                                    <aura:set attribute="else">
+                                                                        &#8595;
+                                                                    </aura:set>
+                                                                </aura:if>
+                                                            </span>
+                                                        </aura:if>
+                                                    </b>
+                                                </div>
+                                            </th>
+                                            <!-- <th scope="col">
+                                            <div class="slds-truncate" title="Access">PACKAGE</div>
+                                        </th> -->
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="Description"
+                                                     class="slds-truncate data-row"
+                                                     title="DESCRIPTION"><b>
+                                                    DESCRIPTION
+                                                    <aura:if isTrue="{!v.sortField=='Description'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b> </div>
+                                                
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="SystemClass"
+                                                     class="slds-truncate data-row"
+                                                     title="SYSTEM CLASS"><b>
+                                                    SYSTEM CLASS
+                                                    <aura:if isTrue="{!v.sortField=='SystemClass'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="UILanguage"
+                                                     class="slds-truncate data-row"
+                                                     title="UI LANGUAGE"><b>
+                                                    UI LANGUAGE
+                                                    <aura:if isTrue="{!v.sortField=='UILanguage'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="testDistribution"
+                                                     class="slds-truncate data-row"
+                                                     title="TEST DISTRIBUTION"><b>
+                                                    TEST DISTRIBUTION
+                                                    <aura:if isTrue="{!v.sortField=='TestDistribution'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="ReleaseStatus"
+                                                     class="slds-truncate data-row"
+                                                     title="RELEASE STATUS"><b>
+                                                    RELEASE STATUS
+                                                    <aura:if isTrue="{!v.sortField=='ReleaseStatus'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="PublishedOn"
+                                                     class="slds-truncate data-row"
+                                                     title="PUBLISHED ON"><b>
+                                                    PUBLISHED ON
+                                                    <aura:if isTrue="{!v.sortField=='PublishedOn'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>  </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="ArrivedDate"
+                                                     class="slds-truncate data-row"
+                                                     title="ARRIVED ON"><b>
+                                                    ARRIVED ON
+                                                    <aura:if isTrue="{!v.sortField=='ArrivedDate'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>  </div>
+                                            </th>                                    
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration var="pkge" items="{!v.currentReadyList}" >
+                                            <c:SWID_SelectedPackageandRow view="{!pkge}" OnRecSelection="{!c.checkboxSelect}"/>                                        
+                                            <!--<tr>
+                                                <td scope="row" class="slds-text-alignright" style="width:3.25rem;">
+                                                    <div class="slds-form-element">
+                                                        <div class="slds-form-element__control"><b>
+                                                            <label class="slds-checkbox">
+                                                                <ui:inputCheckbox text="{!pkge.Id}" aura:id="boxPack" value="" change="{!c.checkboxSelect}"/>
+                                                                <span class="slds-checkboxfaux"></span>
+                                                                <span class="slds-form-element__label text"></span>
+                                                            </label></b>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><ui:outputText value="{!pkge.Packages}"/></td>
+                                                <td><ui:outputText value="{!pkge.Description}"/></td>											
+                                                <td><ui:outputText value="{!pkge.sysCls}"/></td>
+                                                <td><ui:outputText value="{!pkge.UILang}"/></td>	
+                                                <td><c:SWID_PackStatusColours status="{!pkge}"/></td>
+                                                <td><c:SWID_DATETIME dateTimeVal="{!pkge.publishedOn}" /></td>
+                                                <td><c:SWID_DATETIME dateTimeVal="{!pkge.ArrivedDate}" /></td>
+                                            </tr>-->
+                                        </aura:iteration>
+                                        
+                                    </tbody>
+                                </table><br/>
+                                <div align="center">
+                                    <c:SWID_Pagination currentPageNumber="{!v.pageNumber}"	maxPageNumber="{!v.maxPage}" />
+                                </div>
+                                <aura:set attribute="else">
+                                    
+                                    <div class="slds-text-heading_medium">
+                                        <div class="slds-align_absolute-center" style="height: 10rem;">
+                                            <b>Currently there are no new Packages to release.</b>
+                                        </div>
+                                    </div>
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                        <div aura:id="releasedDataId" id="tab-default-2" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="released_Link_Id">
+                            <div>
+                                <lightning:button variant="brand" class="slds-button slds-button--destructive" label="Delete Local Release" onclick="{! c.delLocRelButton_InDistrub }" disabled="{!v.enableDelLocRelBtn_InDistrub}"/>
+                                <lightning:button variant="brand" label="Test Release" onclick="{! c.TestReleaseButton_InDistrub }" disabled="{!v.enableTestRelBtn_InDistrub}"/>
+                            </div><br/>
+                            <aura:if isTrue="{!v.inDisTabCount}">
+                                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                                    <thead>
+                                        <tr class="slds-text-title_caps">
+                                            
+                                            <!-- <th scope="col">
+                                            <ui:inputCheckbox aura:id="allCheck" class="slds-checkbox" value="{!v.allSelectCheckbox}"/>
+                                        </th> -->
+                                            <th style="width:3.25rem;" class="slds-text-align--right">
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control">
+                                                        <b>
+                                                            <label class="slds-checkbox">
+                                                                <!--header checkbox for select all-->
+                                                                <ui:inputCheckbox aura:id="box2" change="{!c.selectAllReleased}" value="{!v.myBoolReleased}"/>
+                                                                <span class="slds-checkbox--faux"></span>
+                                                                <span class="slds-form-element__label text"></span>
+                                                            </label>
+                                                        </b>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col">
+                                                <!-- for data attributes dont use capitalcase-->
+                                                <div onclick="{!c.sortByStringReleased}" data-sortfield="Packages"
+                                                     class="slds-truncate data-row"
+                                                     title="PACKAGE Name"> <b>
+                                                    PACKAGE ID
+                                                    <aura:if isTrue="{!v.sortField=='Packages'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>  </div>
+                                            </th>
+                                            <!-- <th scope="col">
+                                            <div class="slds-truncate" title="Access">PACKAGE</div>
+                                        </th> -->
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByStringReleased}" data-sortfield="Description"
+                                                     class="slds-truncate data-row"
+                                                     title="DESCRIPTION"> <b>
+                                                    DESCRIPTION
+                                                    <aura:if isTrue="{!v.sortField=='Description'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                                
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="SystemClass"
+                                                     class="slds-truncate data-row"
+                                                     title="SYSTEM CLASS"><b>
+                                                    SYSTEM CLASS
+                                                    <aura:if isTrue="{!v.sortField=='SystemClass'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="UILanguage"
+                                                     class="slds-truncate data-row"
+                                                     title="UI LANGUAGE"><b>
+                                                    UI LANGUAGE
+                                                    <aura:if isTrue="{!v.sortField=='UILanguage'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="testDistribution"
+                                                     class="slds-truncate data-row"
+                                                     title="TEST DISTRIBUTION"><b>
+                                                    TEST DISTRIBUTION
+                                                    <aura:if isTrue="{!v.sortField=='TestDistribution'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByStringReleased}" data-sortfield="ReleaseStatus"
+                                                     class="slds-truncate data-row"
+                                                     title="RELEASE STATUS"> <b>
+                                                    RELEASE STATUS
+                                                    <aura:if isTrue="{!v.sortField=='ReleaseStatus'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b> </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByStringReleased}" data-sortfield="ReleasedDate"
+                                                     class="slds-truncate data-row"
+                                                     title="RELEASED ON"> <b>
+                                                    RELEASED ON
+                                                    <aura:if isTrue="{!v.sortField=='ReleasedDate'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration var="pkge" items="{!v.currentReleasedList}" >                                            
+                                            <c:SWID_SelectedPackageandRow view="{!pkge}" OnRecSelection="{!c.checkboxSelectReleased}"/>
+                                            <!--<tr>
+                                                <td scope="row" class="slds-text-alignright" style="width:3.25rem;">
+                                                    <div class="slds-form-element">
+                                                        <div class="slds-form-element__control">
+                                                            <label class="slds-checkbox">
+                                                                <ui:inputCheckbox text="{!pkge.Id}" aura:id="boxPackReleased" value="" change="{!c.checkboxSelect}"/>
+                                                                <span class="slds-checkboxfaux"></span>
+                                                                <span class="slds-form-element__label text"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><ui:outputText value="{!pkge.Packages}"/></td>
+                                                <td><ui:outputText value="{!pkge.Description}"/></td>
+                                                <td><ui:outputText value="{!pkge.sysCls}"/></td>
+                                                <td><ui:outputText value="{!pkge.UILang}"/></td>
+                                                <td><c:SWID_PackStatusColours status="{!pkge}"/></td>
+                                                <td><ui:outputText value="{!pkge.ReleasedOn}"/></td>
+                                            </tr>-->
+                                        </aura:iteration>
+                                    </tbody>
+                                </table><br/>
+                                <div align="center">
+                                    <c:SWID_Pagination currentPageNumber="{!v.pageNumberReleased}"	maxPageNumber="{!v.maxPageReleased}" />
+                                </div>
+                                <aura:set attribute="else">
+                                    <div class="slds-text-heading_medium">
+                                        <div class="slds-align_absolute-center" style="height: 10rem;">
+                                            <b>Currently there are no new Packages to In Distribution.</b>
+                                        </div>
+                                    </div>
+                                    
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                        <!-- End of RELEASED -->
+                        <!-- START of DELETE -->
+                        <div aura:id="deletedDataId" id="tab-default-3" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="deleted_Link_Id">
+                            <div>
+                                <lightning:button variant="brand" label="Local Release" onclick="{! c.localReleaseButton_Delete }" disabled="{!v.enableLocRelBtn_Delete}"/>
+                                <lightning:button variant="brand" label="Test Release" onclick="{! c.TestReleaseButton_Delete }" disabled="{!v.enableTestRelBtn_Delete}"/>
+                            </div><br/>
+                            <aura:if isTrue="{!v.deleteTabCount}">
+                                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                                    <thead>
+                                        <tr class="slds-text-title_caps">
+                                            
+                                            <!-- <th scope="col">
+                                            <ui:inputCheckbox aura:id="allCheck" class="slds-checkbox" value="{!v.allSelectCheckbox}"/>
+                                        </th> -->
+                                            <th style="width:3.25rem;" class="slds-text-align--right">
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control"><b>
+                                                        <label class="slds-checkbox">
+                                                            <!--header checkbox for select all-->
+                                                            <ui:inputCheckbox aura:id="box3" change="{!c.selectAllDeleted}" value="{!v.myBoolDeleted}"/>
+                                                            <span class="slds-checkbox--faux"></span>
+                                                            <span class="slds-form-element__label text"></span>
+                                                        </label></b>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col">
+                                                <!-- for data attributes dont use capitalcase-->
+                                                <div onclick="{!c.sortByStringDeleted}" data-sortfield="Packages"
+                                                     class="slds-truncate data-row"
+                                                     title="PACKAGE Name"><b>
+                                                    PACKAGE ID
+                                                    <aura:if isTrue="{!v.sortField=='Packages'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <!-- <th scope="col">
+                                            <div class="slds-truncate" title="Access">PACKAGE</div>
+                                        </th> -->
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByStringDeleted}" data-sortfield="Description"
+                                                     class="slds-truncate data-row"
+                                                     title="DESCRIPTION"><b>
+                                                    DESCRIPTION
+                                                    <aura:if isTrue="{!v.sortField=='Description'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>  </div>
+                                                
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="SystemClass"
+                                                     class="slds-truncate data-row"
+                                                     title="SYSTEM CLASS"><b>
+                                                    SYSTEM CLASS
+                                                    <aura:if isTrue="{!v.sortField=='SystemClass'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="UILanguage"
+                                                     class="slds-truncate data-row"
+                                                     title="UI LANGUAGE"><b>
+                                                    UI LANGUAGE
+                                                    <aura:if isTrue="{!v.sortField=='UILanguage'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="testDistribution"
+                                                     class="slds-truncate data-row"
+                                                     title="TEST DISTRIBUTION"><b>
+                                                    TEST DISTRIBUTION
+                                                    <aura:if isTrue="{!v.sortField=='TestDistribution'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByStringDeleted}" data-sortfield="ReleaseStatus"
+                                                     class="slds-truncate data-row"
+                                                     title="RELEASE STATUS"><b>
+                                                    RELEASE STATUS
+                                                    <aura:if isTrue="{!v.sortField=='ReleaseStatus'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b> </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByStringDeleted}" data-sortfield="DeletedDate"
+                                                     class="slds-truncate data-row"
+                                                     title="DELETED ON"><b>
+                                                    DELETED ON
+                                                    <aura:if isTrue="{!v.sortField=='DeletedDate'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b></div>
+                                            </th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration var="pkge" items="{!v.currentDeletedList}" >
+                                            <c:SWID_SelectedPackageandRow view="{!pkge}" OnRecSelection="{!c.checkboxSelectDeleted}"/>
+                                            
+                                            <!--<tr>
+                                                <td scope="row" class="slds-text-alignright" style="width:3.25rem;">
+                                                    <div class="slds-form-element">
+                                                        <div class="slds-form-element__control">
+                                                            <label class="slds-checkbox">
+                                                                <ui:inputCheckbox text="{!pkge.Id}" aura:id="boxPackDeleted" value="" change="{!c.checkboxSelectDeleted}"/>
+                                                                <span class="slds-checkboxfaux"></span>
+                                                                <span class="slds-form-element__label text"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><ui:outputText value="{!pkge.Packages}"/></td>
+                                                <td><ui:outputText value="{!pkge.Description}"/></td>
+                                                <td><ui:outputText value="{!pkge.sysCls}"/></td>
+                                                <td><ui:outputText value="{!pkge.UILang}"/></td>
+                                                <td><c:SWID_PackStatusColours status="{!pkge}"/></td>
+                                                <td><ui:outputText value="{!pkge.DeletedOn}"/></td>
+                                                
+                                            </tr>-->
+                                        </aura:iteration>
+                                    </tbody>
+                                </table><br/>
+                                <div align="center">
+                                    <c:SWID_Pagination currentPageNumber="{!v.pageNumberDeleted}"	maxPageNumber="{!v.maxPageDeleted}" />
+                                </div>
+                                <aura:set attribute="else">
+                                    <div class="slds-text-heading_medium">
+                                        <div class="slds-align_absolute-center" style="height: 10rem;">
+                                            <b>Currently there are no new Packages to release.</b>
+                                        </div>
+                                    </div>
+                                    
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                        
+                        <!-- END of DELETE -->
+                        <div aura:id="ignoredDataId" id="tab-default-4" class="slds-tabs--default__content slds-hide" role="tabpanel" aria-labelledby="Ignored_Link_Id">
+                            <div>
+                                <lightning:button variant="brand" label="Unignore" onclick="{! c.unIgnoreButton_Ignore }" disabled="{!v.enableIgnBtn_Ignore}"/>
+                            </div><br/>
+                            <aura:if isTrue="{!v.ignoreTabCount}">
+                                <table class="slds-table slds-table_bordered slds-table_cell-buffer">
+                                    <thead>
+                                        <tr class="slds-text-title_caps">
+                                            
+                                            <!-- <th scope="col">
+                                            <ui:inputCheckbox aura:id="allCheck" class="slds-checkbox" value="{!v.allSelectCheckbox}"/>
+                                        </th> -->
+                                            <th style="width:3.25rem;" class="slds-text-align--right">
+                                                <div class="slds-form-element">
+                                                    <div class="slds-form-element__control"><b>
+                                                        <label class="slds-checkbox">
+                                                            <!--header checkbox for select all-->
+                                                            <ui:inputCheckbox aura:id="box4" change="{!c.selectAllIgnored}" value="{!v.myBoolIgnored}"/>
+                                                            <span class="slds-checkbox--faux"></span>
+                                                            <span class="slds-form-element__label text"></span>
+                                                        </label>
+                                                        </b>
+                                                    </div>
+                                                </div>
+                                            </th>
+                                            <th scope="col">
+                                                <!-- for data attributes dont use capitalcase-->
+                                                <div onclick="{!c.sortByStringIgnored}" data-sortfield="Packages"
+                                                     class="slds-truncate data-row"
+                                                     title="PACKAGE Name"><b>
+                                                    PACKAGE ID
+                                                    <aura:if isTrue="{!v.sortField=='Packages'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b> </div>
+                                            </th>
+                                            <!-- <th scope="col">
+                                            <div class="slds-truncate" title="Access">PACKAGE</div>
+                                        </th> -->
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByStringIgnored}" data-sortfield="Description"
+                                                     class="slds-truncate data-row"
+                                                     title="DESCRIPTION"><b>
+                                                    DESCRIPTION
+                                                    <aura:if isTrue="{!v.sortField=='Description'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>  </div>
+                                                
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="SystemClass"
+                                                     class="slds-truncate data-row"
+                                                     title="SYSTEM CLASS"><b>
+                                                    SYSTEM CLASS
+                                                    <aura:if isTrue="{!v.sortField=='SystemClass'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByString}" data-sortfield="UILanguage"
+                                                     class="slds-truncate data-row"
+                                                     title="UI LANGUAGE"><b>
+                                                    UI LANGUAGE
+                                                    <aura:if isTrue="{!v.sortField=='UILanguage'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>   </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByStringIgnored}" data-sortfield="ReleaseStatus"
+                                                     class="slds-truncate data-row"
+                                                     title="RELEASE STATUS"><b>
+                                                    RELEASE STATUS
+                                                    <aura:if isTrue="{!v.sortField=='ReleaseStatus'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b> </div>
+                                            </th>
+                                            <th scope="col">
+                                                <div onclick="{!c.sortByStringIgnored}" data-sortfield="IgnoredDate"
+                                                     class="slds-truncate data-row"
+                                                     title="IGNORED ON"><b>
+                                                    IGNORED ON
+                                                    <aura:if isTrue="{!v.sortField=='IgnoredDate'}">
+                                                        <span>
+                                                            <aura:if isTrue="{!v.sortAsc}">
+                                                                &#8593;
+                                                                <aura:set attribute="else">
+                                                                    &#8595;
+                                                                </aura:set>
+                                                            </aura:if>
+                                                        </span>
+                                                    </aura:if>
+                                                    </b>  </div>
+                                            </th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <aura:iteration var="pkge" items="{!v.currentIgnoredList}" >
+                                            <c:SWID_SelectedPackageandRow view="{!pkge}" OnRecSelection="{!c.checkboxSelectIgnored}"/>
+                                            <!--<tr>
+                                                <td scope="row" class="slds-text-alignright" style="width:3.25rem;">
+                                                    <div class="slds-form-element">
+                                                        <div class="slds-form-element__control">
+                                                            <label class="slds-checkbox">
+                                                                <ui:inputCheckbox text="{!pkge.Id}" aura:id="boxPackIgnored" value="" change="{!c.checkboxSelectIgnored}"/>
+                                                                <span class="slds-checkboxfaux"></span>
+                                                                <span class="slds-form-element__label text"></span>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td><ui:outputText value="{!pkge.Packages}"/></td>
+                                                <td><ui:outputText value="{!pkge.Description}"/></td>
+                                                <td><ui:outputText value="{!pkge.sysCls}"/></td>
+                                                <td><ui:outputText value="{!pkge.UILang}"/></td>
+                                                <td><c:SWID_PackStatusColours status="{!pkge}"/></td>
+                                                <td><ui:outputText value="{!pkge.IgnoredOn}"/></td>
+                                                
+                                            </tr>-->
+                                        </aura:iteration>
+                                    </tbody>
+                                </table><br/>
+                                <div align="center">
+                                    <c:SWID_Pagination currentPageNumber="{!v.pageNumberIgnored}"	maxPageNumber="{!v.maxPageIgnored}" />
+                                </div>
+                                <aura:set attribute="else">
+                                    <div class="slds-text-heading_medium">
+                                        <div class="slds-align_absolute-center" style="height: 10rem;">
+                                            <b>Currently there are no new Packages to release.</b>
+                                        </div>
+                                    </div>                                    
+                                </aura:set>
+                            </aura:if>
+                        </div>
+                        
+                    </div>                    
+                </div>                
+            </fieldset>           
+            
+        </aura:if>
+        
+        <aura:if isTrue="{!v.modalBox}">
+        <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Part Start From Here ######--> 
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModal}">
+                        X
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="header99" class="slds-text-heading--medium"><b>{!v.btnActionName}</b></h2>
+                </div>
+                <!--###### MODAL BOX BODY Part Start From Here ######-->
+                <div class="slds-modal__content slds-p-around--medium">
+                    <p><b> {!v.cntOfRcds} Package(s) are about to be {!v.actionVal} for {!v.selectedCountryVal} region.
+                        </b>
+                    </p>
+                </div>
+                <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                <div class="slds-modal__footer">
+                    <button class="slds-button slds-button--neutral" onclick="{!c.closeModal}" >Cancel</button>
+                    
+                    <aura:If isTrue="{!!v.enableDelLocRelBtn_InDistrub}">
+                        <button class="slds-button slds-button--destructive" onclick="{!c.saveModalAction}">{!v.btnActionName}</button>
+                        <aura:set attribute="else">
+                        <button class="slds-button slds-button--brand" onclick="{!c.saveModalAction}">{!v.btnActionName}</button>
+                        </aura:set>
+                    </aura:If>
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>  
+    </aura:if>
+        
+        <aura:if isTrue="{!v.Spinner}">
+            <div aura:id="spinnerId" class="slds-spinner_container">
+                <div class="slds-spinner--brand  slds-spinner slds-spinner--large slds-is-relative" role="alert">
+                    <span class="slds-assistive-text">Loading</span>
+                    <div class="slds-spinner__dot-a"></div>
+                    <div class="slds-spinner__dot-b"></div>
+                </div>
+            </div>
+        </aura:if>
+        
+    </div>
+    <aura:if isTrue="{!v.LookupmodalBox}">
+        <c:SWID_Lookup_Modal />
+    </aura:if>    
+    
+</aura:component>

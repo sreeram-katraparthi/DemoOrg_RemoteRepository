@@ -1,0 +1,30 @@
+.THIS.comtainer {
+    color: #16325c;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+.THIS .Packdiv{
+    width:200px;
+    
+}
+.THIS .countRightCorner{
+    position: absolute;
+    top: 0px;
+    right:30px;
+}
+.THIS .data-row:hover {
+    cursor:pointer;
+}
+.THIS .row-bg {
+  background-color: LightGreen;
+}
+.THIS .limitChar{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 145px;
+}
+.THIS.slds-spinner_container {  
+  z-index: 10000;
+  position: fixed;   
+}

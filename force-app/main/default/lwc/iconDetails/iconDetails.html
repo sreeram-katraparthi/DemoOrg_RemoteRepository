@@ -1,0 +1,13 @@
+<template>
+    <span if:true={HasAccess}>
+      <span class="slds-avatar slds-avatar_circle slds-avatar_small">
+        <img alt="Person name" src={photourl} title="Person name" />
+      </span>
+      <!-- <span class="slds-p-left_xx-small">{name}</span> -->
+      <lightning-formatted-url value={value}  label={name} target="_blank" >
+      </lightning-formatted-url>
+    </span>
+    <span if:false={HasAccess}>
+      <span class="slds-avatar slds-avatar_circle slds-avatar_small"><lightning-icon icon-name="standard:avatar_loading" alternative-text="User" size="small" title="Image"></lightning-icon></span>Hidden Until Closed
+    </span>
+  </template>

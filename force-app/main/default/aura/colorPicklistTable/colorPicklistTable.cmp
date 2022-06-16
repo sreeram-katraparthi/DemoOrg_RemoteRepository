@@ -1,0 +1,51 @@
+<aura:component controller="colorPicklistController" implements="force:appHostable">
+  <!--aura init handler , call js "loadContactList" function on component load, and display contact data on table-->   
+  <aura:handler name="init" value="{!this}" action="{!c.loadContactList}"/>
+  
+    <!--Declare Attributes-->  
+  <aura:attribute name="ListOfContact" type="contact[]"/>
+    
+  <div class="slds-p-around--large">
+  <!--https://www.lightningdesignsystem.com/components/data-tables/-->
+    <table class="slds-table slds-table--bordered slds-table--cell-buffer">
+      <thead>
+        <tr class="slds-text-title--caps">
+          <th scope="col">
+            <div class="slds-truncate" title="First Name">First Name</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="First Name">Last Name</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Department">Department</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="First Name">Lead Source</div>
+          </th>
+        </tr>
+      </thead>
+      <!--table body start, 
+        Iterate contact list as a <tr>
+        -->
+      <tbody>
+        <aura:iteration items="{!v.ListOfContact}" var="con">
+          <tr>
+            <th scope="row">
+              <div class="slds-truncate" title="{!con.FirstName}">{!con.FirstName}</div>
+            </th>
+            <th scope="row">
+              <div class="slds-truncate" title="{!con.LastName}">{!con.LastName}</div>
+            </th>
+            <th scope="row">
+              <div class="slds-truncate" title="{!con.Department}">{!con.Department}</div>
+            </th>
+            <th scope="row">
+               <!--Add Child [colorLeadSource.cmp] component and pass the leadSource attribute value-->
+              <c:leadSourceColor leadSource="{!con.LeadSource}"/>
+            </th>
+          </tr>
+        </aura:iteration>
+      </tbody>
+    </table>
+  </div>
+</aura:component>

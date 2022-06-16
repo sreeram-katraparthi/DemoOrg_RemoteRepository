@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>41.0</apiVersion>
+    <description>A client-side controller handles events within a component. It’s a JavaScript resource that defines the functions for all of the component’s
+actions.</description>
+</AuraDefinitionBundle>

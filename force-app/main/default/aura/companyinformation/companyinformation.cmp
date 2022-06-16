@@ -1,0 +1,187 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+    <lightning:card title="Parent Company Information"  >
+        
+        <h2>In case there is no ultimate parent company; please provide information on the lead GFCID.       </h2>
+    </lightning:card>
+    
+    
+    <br/>
+    
+    
+    <div class="demo-only demo-only-sizing slds-grid slds-wrap">
+        
+        <div class="slds-size_1-of-6 ">
+            <div class="slds-box">
+                <h2>Publically Traded</h2>
+            </div>
+        </div>
+        
+        
+        <div class="slds-size_1-of-6 ">
+            <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-1"  disabled="" class="slds-input" />
+            </div>
+        </div>
+        <div class="slds-size_1-of-6 ">
+            <div class="slds-box">
+                <h2>Stock Exchange </h2>
+            </div>
+        </div>
+        
+        <div class="slds-size_1-of-6 ">
+            <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-1"  disabled="" class="slds-input" />
+            </div>
+        </div>
+        <div class="slds-size_1-of-6 ">
+            <div class="slds-box">
+                <h2>Stock Symbol  </h2>
+            </div>
+        </div>
+        <div class="slds-size_1-of-6 ">
+            <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-1"  disabled="" class="slds-input" />
+            </div>
+        </div>
+        
+    </div>
+    
+    <div class="slds-box">
+        <div class="slds-box">
+            <div class="slds-size_1-of-1 ">
+                <h2>Comments ^</h2>
+            </div>
+        </div>
+        <div class="slds-size_1-of-1 ">
+            <div class="slds-form -element">
+                <div class="slds-form-element__control">
+                    <textarea id="textarea-id-01" class="slds-textarea" value=""></textarea>
+                </div>
+            </div>
+        </div>
+    
+        <div class="slds-box">
+            <div class="slds-size_1-of-1 ">
+                <h2>Comment on Intercompany commercial relationship related to proposed facilities ^</h2>
+            </div>
+        </div>
+        <div class="slds-size_1-of-1 ">
+            <div class="slds-form -element">
+                <div class="slds-form-element__control">
+                    <textarea id="textarea-id-01" class="slds-textarea" value=""></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="slds-box">
+            <div class="slds-size_1-of-1 ">
+                <h2>Comment on Intercompany financial  relationship related to proposed facilities ^</h2>
+            </div>
+        </div>
+        <div class="slds-size_1-of-1 ">
+            <div class="slds-form -element">
+                <div class="slds-form-element__control">
+                    <textarea id="textarea-id-01" class="slds-textarea" value=""></textarea>
+                </div>
+            </div>
+        </div>
+    
+        <div class="slds-box">
+            <div class="slds-size_1-of-1 ">
+                <h2>PAM’s recommendation (if applicable) ^</h2>
+            </div>
+        </div>
+        <div class="slds-size_1-of-1 ">
+            <div class="slds-form -element">
+                <div class="slds-form-element__control">
+                    <textarea id="textarea-id-01" class="slds-textarea" value=""></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <br/><br/>
+    
+    <div class="slds-box">
+        <div class="slds-box">
+            <div class="slds-size_1-of-1 ">
+                <h2>Beneficial ownership changed over last 3 years</h2>
+            </div>
+        </div>
+        <div class="slds-size_1-of-1 ">
+            <div class="slds-form -element">
+                <div class="slds-form-element__control">
+                    <textarea id="textarea-id-01" class="slds-textarea" value=""></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="slds-box">
+            <div class="slds-size_1-of-1 ">
+                <h2>If yes, complete the questions below</h2>
+            </div>
+        </div>
+        <div class="slds-size_1-of-1 ">
+            <div class="slds-form -element">
+                <div class="slds-form-element__control">
+                    <textarea id="textarea-id-01" class="slds-textarea" value=""></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="slds-box">
+            <div class="slds-size_1-of-1 ">
+                <h2>Date Ownership Changed </h2>
+            </div>
+        </div>
+        <div class="slds-size_1-of-1 ">
+            <div class="slds-form -element">
+                <div class="slds-form-element__control">
+                    <textarea id="textarea-id-01" class="slds-textarea" value=""></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="slds-box">
+            <div class="slds-size_1-of-1 ">
+                <h2>Ownership Changed From </h2>
+            </div>
+        </div>
+        <div class="slds-size_1-of-1 ">
+            <div class="slds-form -element">
+                <div class="slds-form-element__control">
+                    <textarea id="textarea-id-01" class="slds-textarea" value=""></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slds-box">
+            <div class="slds-size_1-of-1 ">
+                <h2>Business Rationale for Ownership Change</h2>
+            </div>
+        </div>
+        <div class="slds-size_1-of-1 ">
+            <div class="slds-form -element">
+                <div class="slds-form-element__control">
+                    <textarea id="textarea-id-01" class="slds-textarea" value=""></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <br/>
+     <div class="slds-box">
+        <div class="slds-box">
+            <div class="slds-size_1-of-1 ">
+                <h2>Comments ^</h2>
+            </div>
+        </div>
+        <div class="slds-size_1-of-1 ">
+            <div class="slds-form -element">
+                <div class="slds-form-element__control">
+                    <textarea id="textarea-id-01" class="slds-textarea" value=""></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <br/><br/>
+</aura:component>

@@ -1,0 +1,88 @@
+<template>
+    <lightning-card>
+    <fieldset class="slds-form-element" if:true={showRadios} >
+        <div class="slds-form-element__control ">
+            <template for:each={options} for:item="opt">
+                <span  key={opt.value} class="slds-radio myRadio">
+                <input 
+                class="singleRadio" 
+                type="radio" 
+                id={opt.value} 
+                value={opt.value} 
+                name="Myoptions" 
+                onchange={handleradiochange}
+                checked={opt.checked}/>
+            <label class="slds-radio__label" for={opt.value}>
+                <span class="slds-radio_faux"></span>
+                <span class="slds-form-element__label">{opt.value}</span>
+            </label>
+        </span>
+            </template>
+        </div>
+    </fieldset>
+</lightning-card>
+    <br>
+    Selected value is => <b>{selectedValue}</b>
+    <br><br> 
+    <div>
+        <template if:true={areDetailsVisible1} >
+            <lightning-card title="Ross Block" icon-name="standard:formula">
+                    
+                <lightning-layout multiple-rows="true">
+                    <lightning-layout-item size="6" padding="around-small">
+                        <lightning-input type="string" label="First Name" name="firstName" ></lightning-input>
+                    </lightning-layout-item>
+                    <lightning-layout-item size="6" padding="around-small">
+                        <lightning-input type="string" label="Last Name" name="lastName" ></lightning-input>
+                    </lightning-layout-item>
+                </lightning-layout>
+                <lightning-button 
+                    variant="brand" 
+                    label="Next" 
+                    title="Next" 
+                    if:true={showRadios}
+                    onclick={handleNext}
+                    
+                    class="slds-m-left_x-small">
+                </lightning-button>
+            </lightning-card>
+        </template>
+
+        <template if:true={areDetailsVisible2} >
+                <lightning-card title="Rachel Block" icon-name="standard:formula">
+                        
+                        <div class="slds-p-around_x-small">
+                                <lightning-input label="Name" value={rec.Name} onchange={handleNameChange}></lightning-input>
+                                <lightning-input label="Industry" value={rec.Industry} onchange={handleIndChange}></lightning-input>
+                                <lightning-input type="Phone" label="Phone" value={rec.Phone} onchange={handlePhnChange}></lightning-input><br/>
+                                <lightning-button label="Save" onclick={handleClick}></lightning-button>
+                        </div>
+                    
+                </lightning-card>
+            </template>
+            <template if:true={areDetailsVisible3} >
+                    <lightning-card title="Chandler Block" icon-name="standard:formula">
+                            
+                        <lightning-layout multiple-rows="true">
+                            <lightning-layout-item size="6" padding="around-small">
+                                <lightning-input type="string" label="First Name" name="firstName" ></lightning-input>
+                            </lightning-layout-item>
+                            <lightning-layout-item size="6" padding="around-small">
+                                <lightning-input type="string" label="Last Name" name="lastName" ></lightning-input>
+                            </lightning-layout-item>
+                        </lightning-layout>
+                        <lightning-button 
+                            variant="brand" 
+                            label="Next" 
+                            title="Next" 
+                            if:true={showRadios}
+                            onclick={handleNext}
+                            
+                            class="slds-m-left_x-small">
+                        </lightning-button>
+                    </lightning-card>
+                </template>
+
+    </div>
+
+</template>

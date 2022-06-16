@@ -1,0 +1,21 @@
+<aura:component extensible="true" abstract="true" controller="ObjectPanelController"
+                implements="flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="sObjectType" type="String" required="true" />
+    <aura:attribute name="maxRows" type="Integer" default="20" />
+    <aura:attribute name="fields" type="String" />
+    <aura:attribute name="records" type="Object[]" />
+    <aura:attribute name="sObjectInfo" type="Object" />
+
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:handler event="aura:waiting" action="{!c.waiting}"
+                  description="toggles spinner when data begins loading" />
+    <aura:handler event="aura:doneWaiting" action="{!c.doneWaiting}"
+                  description="toggles spinner when data finishes loading" />
+
+    <h2>{!v.sObjectInfo.Label}</h2>
+    <div>{!v.body}</div>
+    <div>
+        <a onclick="{!c.navigateToObjectList}">Visit {!v.sObjectInfo.LabelPlural}</a>
+    </div>
+
+</aura:component>

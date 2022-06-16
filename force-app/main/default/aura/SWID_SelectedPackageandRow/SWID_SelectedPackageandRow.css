@@ -1,0 +1,10 @@
+.THIS .butnRightCorner{
+    position: absolute;
+    bottom: 0px;
+    right:30px;
+}
+.THIS .divIcon{
+    position: absolute;
+    
+    right:-110% !important;
+}

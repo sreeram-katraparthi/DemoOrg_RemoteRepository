@@ -1,0 +1,20 @@
+<aura:component controller="SWID_CountryPicklistController">
+    <aura:handler name="init" value="{!this}" action="{!c.onLoad}"/>
+    <aura:attribute name="dateTimeVal" type="DateTime"/><!--DateTime--> 
+    <aura:attribute name="dateVal" type="String" />
+    <aura:attribute name="timeVal" type="String" />
+    <aura:attribute name="detailDateTime" type="boolean" default="false"/>
+    <div class="slds-truncate"  title="{!v.dateTimeVal}">
+        
+        <!-- <span> {!v.dateTimeVal.ArrivedDate}</span> -->
+        <span>
+            <aura:if isTrue="{!v.detailDateTime}">
+                <div class="timeFontSize"> {!v.dateVal} &nbsp; {!v.timeVal}</div>
+                <aura:set attribute="else">
+                    <div class="dateFontSize"> {!v.dateVal}</div>
+                    <div class="timeFontSize"> {!v.timeVal}</div>
+                </aura:set>
+            </aura:if>
+        </span>
+    </div>
+</aura:component>

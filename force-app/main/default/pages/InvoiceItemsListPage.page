@@ -1,0 +1,15 @@
+<apex:page sidebar="false" showHeader="True" standardStylesheets="false">
+    <apex:includeScript value="/lightning/lightning.out.js" />
+    <div id="lightning" />
+
+    <script>
+        $Lightning.use("c:InvoiceItemsApplication", function() {
+          $Lightning.createComponent("c:InvoiceComponent",
+          { label : "" },
+          "lightning",
+          function(cmp) {
+            // do some stuff
+          });
+        });
+    </script>
+</apex:page>

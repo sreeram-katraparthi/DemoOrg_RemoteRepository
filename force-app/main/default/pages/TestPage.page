@@ -1,0 +1,6 @@
+<apex:page standardController="Account" sidebar="false" showHeader="false">
+
+    <apex:canvasApp applicationName="Test Inline Visualforce" 
+        namespacePrefix="testorg" 
+        height="400px" width="750px"/>
+</apex:page>

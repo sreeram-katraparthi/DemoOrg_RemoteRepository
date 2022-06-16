@@ -1,0 +1,13 @@
+<aura:component description="Form for editing Lead record">
+    <aura:attribute name="record" type="Lead" required="true" />
+
+    <lightning:layout horizontalAlign="center">
+        <lightning:layoutItem size="12" flexibility="auto">
+           <ui:inputText label="First Name" value="{!v.record.FirstName}" />
+        </lightning:layoutItem>
+
+        <lightning:layoutItem size="12" flexibility="auto">
+            <ui:inputText label="Last Name" value="{!v.record.LastName}" />
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

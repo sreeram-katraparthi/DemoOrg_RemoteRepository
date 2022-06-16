@@ -1,0 +1,29 @@
+<template>
+    <lightning-card title="Life Cyce Parent">
+        <div class="slds-m-around_medium">
+            <!--<input type="text" onkeyup={changeHandler}/>
+            {name}-->            
+            <template if:true={showChild}>
+                <lightning-button
+                variant = "brand"
+                title = "remove child"
+                label = "Remove Child"
+                onclick={handleClick}
+                class="slds-m-left_x-small">                
+            </lightning-button>
+            </template>
+<template if:false={showChild}>
+                <lightning-button
+                variant = "brand"
+                title = "show child"
+                label = "Show Child"
+                onclick={handleClick}
+                class="slds-m-left_x-small">                
+            </lightning-button>
+            </template>
+<template if:true={showChild}>
+                <c-life-cycle-child></c-life-cycle-child>
+            </template>
+</div>
+</lightning-card>
+</template>

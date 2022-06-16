@@ -1,0 +1,50 @@
+<aura:component controller="InvoiceItemsListController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,force:lightningQuickAction,lightning:actionOverride" access="global" >
+    <aura:attribute name="sObjectName" type="String"/>
+    <aura:attribute name="fieldSetName" type="String"/>
+    <aura:attribute name="fieldSetValues" type="List"/>
+    <aura:attribute name="tableRecords" type="List"/>
+    <aura:attribute name="parentFieldName" type="String"/>
+    <aura:attribute name="parentRecordId" type="String"/>
+    <aura:attribute name="isOpen" type="boolean" default="false"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    <aura:handler name="lightningEvent" 
+              event="c:CloseNewInvoiceItem" 
+              action="{!c.handleComponentEvent}" />
+    <div class="slds">
+        <table class="slds-table slds-table--bordered">
+            <thead>
+                <tr>
+                    <aura:iteration items="{!v.fieldSetValues}" var="field">
+                        <th class="headersize"> {!field.label}</th>
+                    </aura:iteration>
+                </tr>
+            </thead>
+            <lightning:button variant="brand" label="Create Item" onclick="{!c.OpenPopup}"/>
+            
+            <aura:if isTrue="{!v.isOpen}">
+                <div class="slds-modal slds-fade-in-open">
+                    
+                    <div class="slds-modal__container">
+                        <div class="slds-modal__content slds-p-around-medium">
+                            <div>
+                                <c:NewInvoiceItem/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aura:if>
+            <tbody>
+                <aura:iteration items="{!v.tableRecords}" var="row">
+                    <tr>
+                        <aura:iteration items="{!v.fieldSetValues}" var="field">
+                            <td>
+                                <c:InoviceItemsList record="{!row}" field="{!field}"/>
+                            </td>
+                        </aura:iteration>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+    </div>	
+</aura:component>

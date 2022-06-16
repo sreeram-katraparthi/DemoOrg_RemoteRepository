@@ -1,0 +1,14 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"
+                access="global"
+                controller="AccountDataTable" >
+    <aura:handler name="init" value="{!this}" action="{!c.fetchAccountDetails}"/>
+    
+    <aura:attribute type="account[]" name="accountList"/>
+    <aura:attribute name="tableCol" type="List"/>
+    <aura:attribute name="hidecheckbox" type="boolean"/>
+    
+    <lightning:datatable data="{! v.accountList }" 
+                         columns="{! v.tableCol }"
+                         keyField="id"
+                         hideCheckboxColumn="{!v.hidecheckbox}"/>
+</aura:component>

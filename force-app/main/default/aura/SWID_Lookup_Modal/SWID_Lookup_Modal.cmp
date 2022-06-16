@@ -1,0 +1,76 @@
+<aura:component controller="SWID_CountryPicklistController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global">
+    <aura:attribute name="modalBox" type="Boolean" default="true"/>
+    <aura:attribute name="selectedRecord" type="sObject" default="{}" description="Use,for store SELECTED sObject Record"/>
+    <aura:attribute name="listOfSearchRecords" type="List" description="Use,for store the list of search records which returns from apex class"/>
+    <aura:attribute name="SearchKeyWord" type="string"/>
+    <aura:attribute name="objectAPIName" type="string" default=""/>
+    <aura:attribute name="IconName" type="string" default=""/>
+    <aura:attribute name="label" type="string" default=""/>
+    <aura:attribute name="Message" type="String" default=""/>
+    
+    <aura:registerEvent name="OnLookupModalClose" type="c:SWID_Disbale_Lookup_Modal_Event"/>
+    
+    <aura:handler name="oSelectedRecordEvent" event="c:selectedsObjectRecordEvent" action="{!c.handleComponentEvent}"/>
+    
+    <aura:if isTrue="{!v.modalBox}"><!--{!v.modalBox}-->
+        <div role="dialog" tabindex="-1" aria-labelledby="header99" class="slds-modal slds-fade-in-open ">
+            <div class="slds-modal__container">
+                <!-- ###### MODAL BOX HEADER Part Start From Here ######--> 
+                <div class="slds-modal__header">
+                    <button class="slds-button slds-modal__close slds-button--icon-inverse" title="Close" onclick="{!c.closeModal}">
+                        X
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="header99" class="slds-text-heading--medium"><b>Insert RUDIs</b></h2>
+                </div>
+                <!--###### MODAL BOX BODY Part Start From Here ######-->
+                <div onmouseleave="{!c.onblur}" aura:id="searchRes" class="slds-form-element slds-lookup slds-is-close" data-select="single">
+        <label class="slds-form-element__label" for="lookup-348">{!v.label}</label>
+        <!--This part is for display search bar for lookup-->  
+        <div class="slds-form-element__control">
+            <div class="slds-input-has-icon slds-input-has-icon--right">
+              <lightning:icon class="slds-input__icon slds-show" iconName="utility:search" size="x-small" alternativeText="search"/>
+                
+                <div aura:id="lookupField" class="slds-show">
+                    <span class="slds-icon_container  slds-combobox__input-entity-icon" title="record">
+                        <lightning:icon class="slds-icon slds-icon slds-icon_small slds-icon-text-default" iconName="{!v.IconName}" size="x-small" alternativeText="icon"/>
+                        <span class="slds-assistive-text"></span>
+                    </span>
+                    <ui:inputText click="{!c.onfocus}" updateOn="keyup" keyup="{!c.keyPressController}" class="slds-lookup__search-input slds-input leftPaddingClass" value="{!v.SearchKeyWord}" placeholder="search.."/>
+                </div> 
+                <!-- This markup is for when an record is selected -->
+                <div aura:id="lookupResTarget" class="slds-hide">
+                    <div aura:id="lookup-pill" class="slds-pill_container slds-hide">
+                        <lightning:pill label="{!v.selectedRecord.RUDI__c}" name="{!v.selectedRecord.RUDI__c}" onremove="{! c.clear }"/>                   
+                    </div>
+                </div>    
+            </div>
+        </div>                   
+             
+        <!--This part is for Display typehead lookup result List-->  
+        <ul style="min-height:40px;margin-top:0px !important" class="slds-listbox slds-listbox_vertical slds-dropdown slds-dropdown_fluid slds-lookup__menu slds" role="listbox">
+            <lightning:spinner class="slds-hide" variant="brand" size="small" aura:id="mySpinner"/>
+            <center> {!v.Message}</center>
+            <aura:iteration items="{!v.listOfSearchRecords}" var="singleRec">
+                <c:Lookup oRecord="{!singleRec}"/><!--customLookupResult-->
+            </aura:iteration>
+        </ul>      
+    </div>
+               
+                <!--###### MODAL BOX FOOTER Part Start From Here ######-->
+                <div class="slds-modal__footer">
+                    <lightning:button class="slds-button slds-button--neutral" onclick="{!c.closeModal}" label="Cancel"/>
+                    
+                    <!--<aura:If isTrue="{!!v.enableDelLocRelBtn_InDistrub}">-->
+                        <lightning:button variant="brand" label="Test Release" onclick="{! c.TestReleaseButton_Ready }" />
+                        <!--<aura:set attribute="else">
+                        <button class="slds-button slds-button-brand" onclick="{!c.saveModalAction}">{!v.btnActionName}</button>
+                        </aura:set>
+                    </aura:If>-->
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop slds-backdrop--open"></div>  
+    </aura:if>
+	
+</aura:component>

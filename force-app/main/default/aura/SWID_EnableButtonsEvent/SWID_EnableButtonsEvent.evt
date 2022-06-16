@@ -1,0 +1,7 @@
+<aura:event type="COMPONENT" description="Fire this event for enabling buttons based on selection of a record" >
+    <aura:attribute access="global" name="Packages" type="SWID_CountryPackagesWrapper.SWID_CountryPackagesWrapper[]" 
+                    description="Carry the selected record(s) from a child component"/>
+    <aura:attribute access="global" name="enblButtons" type="boolean" default="false"
+                    description="Enable/Disable buttons based on record selection"/>
+    <aura:attribute access="global" name="recId" type="string" />
+</aura:event>

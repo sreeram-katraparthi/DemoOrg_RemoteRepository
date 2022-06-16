@@ -1,0 +1,18 @@
+<aura:component extends="c:objectPanel">
+    <aura:attribute name="showAccountWarning" type="Boolean" default="true" />
+
+    <aura:set attribute="sObjectType" value="Account" />
+    <aura:set attribute="fields" value="AccountNumber,Website" /> 
+
+    <aura:iteration items="{!v.records}" var="rec">
+        <div>
+            <a onclick="{!c.deleteRecord}">Del</a> | 
+            <a onclick="{!c.navigateToRecord}"><ui:outputText value="{!rec.Name}"/></a>
+            <ui:outputText value="{!rec.AccountNumber}" />
+            <ui:outputURL value="{!rec.Website}" />
+            <aura:renderIf isTrue="{!and(v.showAccountWarning, rec.Is_Red__c)}">
+                <span class="warn">WARNING: Red Account</span>
+            </aura:renderIf>
+        </div>
+    </aura:iteration>
+</aura:component>

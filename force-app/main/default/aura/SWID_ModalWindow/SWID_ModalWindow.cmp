@@ -1,0 +1,26 @@
+<aura:component >
+    <ui:button label="Save" press="{!c.newEvent}" class="btn btn-primary" />
+    <div class="slds">
+    <div aria-hidden="true" role="dialog" class="slds-modal slds-modal--prompt slds-fade-in-hide" aura:id="modaldialog">
+        <div class="slds-modal__container">
+            <div class="slds-modal__header slds-theme--info">
+                <button class="slds-button slds-button--icon-inverse slds-notify__close" onclick="{!c.hidePopup}">
+                    <!--<c:svg aria-hidden="false" class="slds-button__icon slds-button__iconlarge" xlinkHref="/resource/SLDS105/assets/icons/action-sprite/svg/symbols.svg#close">
+                    </c:svg>-->
+                    
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 class="slds-text-heading--medium">Your Title</h2>
+            </div>
+            <div class="slds-modal__content slds-p-around--medium">
+                <div>
+                    <p>{!v.body}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="slds-backdrop slds-backdrop--hide" aura:id="backdrop">
+</div>
+	
+</aura:component>

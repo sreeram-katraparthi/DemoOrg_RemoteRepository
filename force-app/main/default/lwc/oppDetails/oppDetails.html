@@ -1,0 +1,9 @@
+<template>
+    <span if:true={HasReadAccess}>
+        <lightning-formatted-url value={value}  label={label} target="_blank" >
+        </lightning-formatted-url>
+    </span>
+    <span if:false={HasReadAccess}>
+        {label}
+    </span>
+</template>

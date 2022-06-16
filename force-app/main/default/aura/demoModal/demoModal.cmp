@@ -1,0 +1,575 @@
+<aura:component implements="lightning:actionOverride,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes" access="global" >
+
+    <ui:button class="slds-align_absolute-center" label="Click Me To Popup!!!" press="{!c.openmodal}"  />
+        <div role="dialog" tabindex="-1" aria-labelledby="header43" aura:id="Modalbox" 
+             class="slds-modal slds-modal_large" >
+            <div class="slds-modal__container" style="width: 65%;">
+                <div class="slds-modal__header">
+                	EDIT
+                </div>
+                <div class="slds-modal__content slds-p-around--medium">
+                    <!--FIRSTSECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Property Information</h3>
+                        </div> 
+                    </div>    
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Property Original Name" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Status" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Property Publishing Name" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Instant booking" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Region City" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Exklusive" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Region State" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Hold expiry" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Region Country" name="myname"  /> 
+                        </div>
+                	</div>
+                    <!--SECONDSECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Max guest capacity</h3>
+                        </div> 
+                    </div>    
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Max.Adults" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Total Max Guests" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Max. children" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Total max. guests number" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Max. babies" name="myname"  /> 
+                        </div>
+                	</div>
+                    <!--THIRDSECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Min / Max stay</h3>
+                        </div> 
+                    </div>    
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Minimum stay" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Maximum stay" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Minimum stay unit" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Maximum stay unit" name="myname" /> 
+                        </div>
+                	</div>
+                    <!--FOURTHSECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Display rates</h3>
+                        </div> 
+                    </div>    
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Nightly rate from" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Nightly Rate to" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Weekly rate from" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Monthly rate to" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Monthly rate from" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Weekly rate to" name="myname" /> 
+                        </div>
+                	</div>
+                    <!--FIFTH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Payment schedule</h3>
+                        </div> 
+                    </div>    
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Down payment" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Remaining payment" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Down payment due to" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Remaining payment due to" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="# day before Check-in" name="myname"  /> 
+                        </div>
+                	</div>
+                    <!--SIXTH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Basic Information</h3>
+                        </div> 
+                    </div>    
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Type" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Elevator" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Size" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="# Bedrooms number" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Size unit" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="# Bedrooms" name="myname"  /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Lot size" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="# Beds" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Unit Size" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="# Bathrooms" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Floor (European)" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="# Toilets" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Check-in" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Avg. cleaning time" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Check-out" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Cleaning Schedule (days)" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Final Cleaning" name="myname"  /> 
+                        </div>
+                	</div>
+                    <!--SEVENTH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Descriptions</h3>
+                        </div> 
+                    </div>    
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:textarea label="Short property description" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Meta Title" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:textarea label="Full property description" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Meta Title (EN)" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:textarea label="Area description" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Meta Description" name="myname"  /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:textarea label="About us" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Meta Description (EN)" name="myname" /> 
+                        </div>
+                	</div>
+                    <!--EIGHTH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Agency relevant Information</h3>
+                        </div> 
+                    </div>    
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Property Owner" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Channel partners/agencies" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <span class="slds-p-top_x-large">Advertised by Owner</span>
+                            <lightning:input type="checkbox" label="" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Competitor" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Property Contact Person" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Publishing Profile" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Maintenance Contact" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large ">
+                            <span class="slds-p-top_x-large">Reapply Sharing</span>
+                            <lightning:input label="" type="checkbox" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Property phone number" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Asset" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Currency" name="myname"  /> 
+                        </div>                	
+                    </div>
+                    <!--NINTH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Data Set Information</h3>
+                        </div> 
+                    </div>    
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Owner" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Propertynumber" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="TravelXite License Partner" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Permalink" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Sub Agency" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Ranking" name="myname" /> 
+                        </div>
+                	</div>
+                     <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="# Of Classifications" name="myname"  /> 
+                        </div>
+                    </div>
+                    <!--TENTH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Address Information</h3>
+                        </div> 
+                    </div>
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Apartment n°" name="myname"  /> 
+                        </div>
+                	</div>
+                    <div class="slds-m-vertical_small">
+                    	<span class=" slds-p-left_xx-large">Location</span>
+                    </div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Latitude" name="myname" /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Longitude" name="myname"/> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Street" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-m-vertical_small">
+                    	<span class="slds-p-left_xx-large">Property GeoLocation</span>
+                    </div>    
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Latitude" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Longitude" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Postal Code" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:textarea label="Access codes" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="City" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Address2 " name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Region" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Address3" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="country" name="myname"  /> 
+                        </div>
+                    </div>
+                    <!--ELEVENTH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Other Information</h3>
+                        </div> 
+                    </div>
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:textarea label="Internal Notes" name="myname"  /> 
+                        </div>
+                         <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:textarea label="Arrival sheet" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:textarea label="Inventory" name="myname"  /> 
+                        </div>
+                	</div>
+                    <!-- TWELVETH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Policies and Check-In Instructions</h3>
+                        </div> 
+                    </div>
+                     <div class="slds-p-top_medium">
+                        <div class="slds-size_12-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:textarea label="Policy / Check-In Instructions" name="myname"  /> 
+                        </div>
+                    </div>
+                    <div class="slds-p-top_medium">
+                         <div class="slds-size_12-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:textarea label="Property Description Website" name="myname" /> 
+                        </div>
+                	</div>
+                    <!--THIRTEENTH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Rent commission and VAT</h3>
+                        </div> 
+                    </div>
+                     <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="VAT rate" name="myname"  /> 
+                        </div>
+                         <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="VAT calculation" name="myname" /> 
+                        </div>
+                	</div>
+                    <!--FOURTEENTH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Owner Data Visibility</h3>
+                        </div> 
+                    </div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <span class="slds-p-top_x-large">Show guest name</span>
+                            <lightning:input type="checkbox" label="" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <span class="slds-p-top_x-large">Show phone number</span>
+                            <lightning:input type="checkbox" label="" name="myname"  /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <span class="slds-p-top_x-large">Show guest email</span>
+                            <lightning:input type="checkbox" label="" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <span class="slds-p-top_x-large">Show guest comments</span>
+                            <lightning:input type="checkbox" label="" name="myname"  /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_x-small">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <span class="slds-p-top_x-large">Show guests #</span>
+                            <lightning:input type="checkbox" label="" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <span class="slds-p-top_x-large">Enable rent calculation</span>
+                            <lightning:input type="checkbox" label="" name="myname"  /> 
+                        </div>
+                	</div>
+                    <!--FIFTEENTH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">Scoring Information</h3>
+                        </div> 
+                    </div>
+                    <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Score Photos" name="myname"  /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Score General" name="myname"  /> 
+                        </div>
+                         <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:textarea label="Score General Information" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Score Rental Periods" name="myname"  /> 
+                        </div>
+                         <div class="slds-size_5-of-12 slds-p-left_xx-small slds-p-horizontal_x-large " >
+                            <lightning:input label="Score Rental Periods Information" name="myname" /> 
+                        </div>
+                	</div>
+                    <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                        <lightning:input label="Rental Period First Checkin Date" name="myname"  /> 
+                    </div>
+                    <div class="slds-size_5-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                        <lightning:input label="Rental Period Last Checkout Date" name="myname" /> 
+                    </div>
+                    <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                        <lightning:input label="Score Classifications" name="myname"  /> 
+                    </div>
+                    <div class="slds-size_5-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                        <lightning:input label="Score Overall" name="myname" /> 
+                    </div>
+                    <!--SIXTEENTH SECTION-->
+                    <div class="slds-p-left_xx-large slds-p-right_xx-large slds-p-top_medium">
+                        <div class="slds-page-header" style="padding-top: 9px; padding-bottom: 9px;, padding-right: 9px;, padding-left: 10px;">
+                            <h3 style="font-size: 1rem;" title="">System Information</h3>
+                        </div> 
+                    </div>
+                    <div class="slds-grid slds-p-top_medium">
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Created By" name="myname"  /> 
+                        </div>
+                        <div class="slds-size_6-of-12 slds-p-left_xx-large slds-p-horizontal_x-large " >
+                            <lightning:input label="Last Modified By" name="myname"  /> 
+                        </div>
+                	</div>
+                    
+                </div>
+                
+                <div class="slds-modal__footer">
+                    <ui:button label="close" press="{!c.closeModal}"  />
+                </div>
+            </div>
+        </div>
+        <div class="slds-backdrop " aura:id="Modalbackdrop"></div>   
+</aura:component>

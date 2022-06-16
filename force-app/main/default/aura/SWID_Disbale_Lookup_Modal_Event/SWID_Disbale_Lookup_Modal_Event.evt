@@ -1,0 +1,3 @@
+<aura:event type="COMPONENT" description="Fire this event for enable/disable the lookup modal window ">    
+    <aura:attribute access="global" name="setLookupModalFalse" type="boolean" default="True"/>
+</aura:event>

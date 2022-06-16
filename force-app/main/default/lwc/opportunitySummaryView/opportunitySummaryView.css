@@ -1,0 +1,11 @@
+.ci-summary {
+    display: inline-flex;
+    flex-direction: column;
+    line-height: 1;
+}
+.ci-summary__count_blue {
+    color:rgba(0, 97, 193, 1);
+}
+.ci-summary__label {
+    font-size: 1rem;
+}

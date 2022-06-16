@@ -1,0 +1,7 @@
+<template>
+    <lightning-card title="Child to Parent Event Sample" icon-name="custom:custom45">
+        <p>You are in Page : {page}</p><br>
+        <p>Redirected to {pageMsg}</p>
+        <c-child-event-sample onprevious={handlePrevious} onnext={handleNext}></c-child-event-sample>
+    </lightning-card>
+</template>

@@ -1,0 +1,27 @@
+.verticalCenter{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.yoy_metric{
+    padding: 3px;
+    color: white;
+    border-radius: 5px;
+}
+.yoy_metric_positive{
+    background-color:#398150;
+}
+.yoy_metric_negative{
+    background-color:#B3433B;
+}
+.yoy_metric_nutral{
+    background-color:#7C7E83;
+}
+
+.ci-summary__count {
+   /* font-size: 2rem;
+    font-weight: bold;
+    color: #0061c1;*/
+    font-size: 32px;
+    font-family: Salesforce Sans Regular;
+    color: #4F4F4F;
+}
