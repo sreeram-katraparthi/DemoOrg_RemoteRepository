@@ -12,9 +12,9 @@ public class Duplicate_ProductJsonParser {
                 addKey = false;
                 addRootKey = false;
                 key = parser.getText();
-                if((key == 'ProductName') || (key == 'Quantity') || (key == 'Type')){
+                if((key == ProductConstanstsController.PRODNAME) || (key == ProductConstanstsController.QUANTITY) || (key == ProductConstanstsController.TYPE)){
                     addKey = true;
-                }else if(key == 'id'){
+                }else if(key == ProductConstanstsController.ID){
                     addRootKey = true;
                 }
                 parser.nextToken();
