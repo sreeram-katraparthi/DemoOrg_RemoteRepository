@@ -7,7 +7,7 @@ global class Webhook_GitHubSubscription {
             RestResponse response = RestContext.response;
             system.debug('Responnse from Git : '+response);
         }catch(Exception ex){
-            System.debug(ex.getMessage());
+            System.debug('Exception happened : '+ex.getMessage());
         }
     }
 }
