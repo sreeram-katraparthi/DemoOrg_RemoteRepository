@@ -5,6 +5,7 @@ global class Webhook_GitHubSubscription {
         try{
             RestRequest request = RestContext.request;
             RestResponse response = RestContext.response;
+            system.debug('Responnse from Git : '+response);
         }catch(Exception ex){
             System.debug(ex.getMessage());
         }
