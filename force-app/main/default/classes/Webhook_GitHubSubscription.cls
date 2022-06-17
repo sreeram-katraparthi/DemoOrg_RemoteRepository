@@ -4,6 +4,8 @@ global class Webhook_GitHubSubscription {
     global static void handleNotification(){
         try{
             RestRequest request = RestContext.request;
+            Blob reqbody = request.requestBody();
+            system.debug('Response from Git : '+reqbody);
             RestResponse response = RestContext.response;
             system.debug('Response from Git : '+response);
         }catch(Exception ex){
