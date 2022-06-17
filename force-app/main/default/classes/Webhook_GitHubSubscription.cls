@@ -9,14 +9,21 @@ global class Webhook_GitHubSubscription {
             RestResponse response = RestContext.response;
             system.debug('Response from SF : '+response);
             jsonparser parser = JSON.createParser(reqbody.tostring());
+            pusher ps;
             while(parser.nextToken() != null){
                 if(parser.getText() == 'pusher'){
-                    System.debug('in pusher next token : '+parser.nextToken());
-                    
+                    parser.nextToken();
+                    ps = (pusher) parser.readvalueas(pusher.class);
+                    system.debug('Pusher detaisl : '+ps); 
                 }
             }
         }catch(Exception ex){
             System.debug('Exception happened : '+ex.getMessage());
         }
     }
+
+    public class pusher{
+        public string name;
+        public string email;
+   } 
 }
