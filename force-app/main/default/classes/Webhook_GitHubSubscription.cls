@@ -11,12 +11,13 @@ global class Webhook_GitHubSubscription {
             pusher ps;
             while(parser.nextToken() != null){
                 if(parser.getText() == 'pusher'){
-                    system.debug('Parser.nextToken() in pusher : '+parser.nextToken());
-                    system.debug('Parser.getText() in pusher : '+parser.getText());
+                    parser.nextToken();
                     ps = (pusher) parser.readvalueas(pusher.class);
-                    system.debug('Pusher detaisl : '+ps); 
+                    system.debug('Pusher details : '+ps); 
                 }
             }
+            response.statusCode = 200;
+            response.responseBody = Blob.valueOf(JSON.serialize(new SFDCResponse('SUCCESS','Processed Successfully'))); 
         }catch(Exception ex){
             System.debug('Exception happened : '+ex.getMessage());
         }
@@ -26,4 +27,13 @@ global class Webhook_GitHubSubscription {
         public string name;
         public string email;
    } 
+
+   public class SFDCResponse{
+       string response;
+       string message;
+       public SFDCResponse(string response,string message){
+           response = response;
+           message = message;
+       }
+   }
 }
