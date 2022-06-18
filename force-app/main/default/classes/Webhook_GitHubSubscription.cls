@@ -32,8 +32,8 @@ global class Webhook_GitHubSubscription {
        string response;
        string message;
        public SFDCResponse(string response,string message){
-           response = response;
-           message = message;
+           this.response = response;
+           this.message = message;
        }
    }
 }
