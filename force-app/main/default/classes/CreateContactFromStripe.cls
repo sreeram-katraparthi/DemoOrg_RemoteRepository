@@ -126,7 +126,20 @@ global class CreateContactFromStripe {
                //}                                
            }
         }
-        Contact con = new Contact(lastname=name,phone=phone,email=email);
+        Contact con = new Contact();
+        con.lastname=name;
+        con.phone=phone;
+        con.email=email;
+        con.MailingStreet = ba.line1 + ba.line2;
+        con.MailingCity = ba.city;
+        con.MailingState = ba.state;
+        con.MailingCountry = ba.country;
+        con.MailingPostalCode = ba.postal_code;
+        con.OtherStreet = sa.address.line1 + sa.address.line2;
+        con.OtherCity = sa.address.city;
+        con.OtherState = sa.address.state;
+        con.OtherCountry = sa.address.country;
+        con.OtherPostalCode = sa.address.postal_code;
         insert con;
         system.debug('** contact id **'+con.id);
     }
