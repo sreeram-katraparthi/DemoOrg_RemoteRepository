@@ -109,16 +109,18 @@ global class CreateContactFromStripe {
                // Get the value.
                 parser.nextToken();
                 system.debug('inside customer parser.gettext()'+parser.getText());
-                /*if(parser.getText() == 'address'){
+                if(parser.getText() == 'address'){
+                  parser.nextToken();
                   ba = (BillingAddress)parser.readValueAs(BillingAddress.class);
                   system.debug('Billing Address : '+ba);
-                }*/                                
+                }                                
             }
             if (parser.getText() == 'shipping'){ 
               // Get the value.
                parser.nextToken();
                system.debug('inside shipping parser.gettext()'+parser.getText());
                /*if(parser.getText() == 'address'){
+                 parser.nextToken();
                  sa = (ShippingAddress)parser.readValueAs(ShippingAddress.class);
                  system.debug('Shipping Address : '+sa);
                } */                               
@@ -143,6 +145,10 @@ global class CreateContactFromStripe {
     }
 
     public class ShippingAddress{
+      address address;      
+    }
+
+    public class address{
       public string line1;
       public string line2;
       public string city;
