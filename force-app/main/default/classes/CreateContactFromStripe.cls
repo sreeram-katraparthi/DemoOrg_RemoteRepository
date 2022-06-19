@@ -119,8 +119,8 @@ global class CreateContactFromStripe {
               // Get the value.
                //parser.nextToken();
                system.debug('inside shipping parser.gettext()'+parser.getText());
-               /*if(parser.getText() == 'address'){
-                 parser.nextToken();*/
+               //if(parser.getText() == 'address'){
+                 parser.nextToken();
                  sa = (ShippingAddress)parser.readValueAs(ShippingAddress.class);
                  system.debug('Shipping Address : '+sa);
                //}                                
