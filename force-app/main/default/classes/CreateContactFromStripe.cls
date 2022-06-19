@@ -79,6 +79,8 @@ global class CreateContactFromStripe {
         string name = '';
         string phone = '';
         string email = '';
+        BillingAddress ba;
+        ShippingAddress sa;
         while (parser.nextToken() != null) {
            // System.debug('** parser.getCurrentToken() **'+parser.getCurrentToken());
             //System.debug('** JSONToken.FIELD_NAME **'+JSONToken.FIELD_NAME);
@@ -103,13 +105,22 @@ global class CreateContactFromStripe {
                 email = parser.getText();
                 system.debug('** email **'+email);                
             }
-            if (parser.getCurrentToken() == JSONToken.FIELD_NAME && 
-                (parser.getText() == 'line2')){ 
+            if (parser.getText() == 'customer'){ 
                // Get the value.
                 parser.nextToken();
-                string line2 = parser.getText();
-                system.debug('** line2 **'+line2);                
+                if(parser.getText() == 'address'){
+                  ba = (BillingAddress)parser.readValueAs(BillingAddress.class);
+                  system.debug('Billing Address : '+ba);
+                }                                
             }
+            if (parser.getText() == 'shipping'){ 
+              // Get the value.
+               parser.nextToken();
+               if(parser.getText() == 'address'){
+                 sa = (ShippingAddress)parser.readValueAs(ShippingAddress.class);
+                 system.debug('Shipping Address : '+sa);
+               }                                
+           }
         }
         Contact con = new Contact(lastname=name,phone=phone,email=email);
         insert con;
@@ -118,6 +129,24 @@ global class CreateContactFromStripe {
     
     global static string doGet(){
         return '{"message" : "Public API Success"}';
+    }
+
+    public class BillingAddress{
+      public string line1;
+      public string line2;
+      public string city;
+      public string state;
+      public string country;
+      public string postal_code;
+    }
+
+    public class ShippingAddress{
+      public string line1;
+      public string line2;
+      public string city;
+      public string state;
+      public string country;
+      public string postal_code;
     }
     
 }
