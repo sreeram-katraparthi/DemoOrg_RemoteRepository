@@ -117,13 +117,13 @@ global class CreateContactFromStripe {
             }
             if (parser.getText() == 'shipping'){ 
               // Get the value.
-               parser.nextToken();
+               //parser.nextToken();
                system.debug('inside shipping parser.gettext()'+parser.getText());
                /*if(parser.getText() == 'address'){
-                 parser.nextToken();
+                 parser.nextToken();*/
                  sa = (ShippingAddress)parser.readValueAs(ShippingAddress.class);
                  system.debug('Shipping Address : '+sa);
-               } */                               
+               //}                                
            }
         }
         Contact con = new Contact(lastname=name,phone=phone,email=email);
