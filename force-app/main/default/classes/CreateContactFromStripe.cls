@@ -108,18 +108,20 @@ global class CreateContactFromStripe {
             if (parser.getText() == 'customer'){ 
                // Get the value.
                 parser.nextToken();
-                if(parser.getText() == 'address'){
+                system.debug('inside customer parser.gettext()'+parser.getText());
+                /*if(parser.getText() == 'address'){
                   ba = (BillingAddress)parser.readValueAs(BillingAddress.class);
                   system.debug('Billing Address : '+ba);
-                }                                
+                }*/                                
             }
             if (parser.getText() == 'shipping'){ 
               // Get the value.
                parser.nextToken();
-               if(parser.getText() == 'address'){
+               system.debug('inside shipping parser.gettext()'+parser.getText());
+               /*if(parser.getText() == 'address'){
                  sa = (ShippingAddress)parser.readValueAs(ShippingAddress.class);
                  system.debug('Shipping Address : '+sa);
-               }                                
+               } */                               
            }
         }
         Contact con = new Contact(lastname=name,phone=phone,email=email);
